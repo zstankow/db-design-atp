@@ -2,55 +2,42 @@ import rankings
 import tournaments
 import argparse
 
-def verify_input(user_input):
-    """
-    Validates user input for ATP Rankings menu options.
-
-    Args:
-        user_input (str): The user-provided input for the menu option.
-
-    Returns:
-        str: The valid input for the ATP Rankings menu.
-    """
-    while True:
-        if user_input not in ['head2head', 'ranking', '-h']:
-            user_input = input("Invalid input: Please type either 'head2head' or 'ranking' or type '-h' for help. ")
-        elif user_input == '-h':
-            print("head2head: type the name of 2 players and see their stats side by side!\n"
-                  "ranking: displays a list of top players and stats")
-            user_input = input("Type either 'head2head' or 'ranking' or type '-h' for help. ")
-        else:
-            return user_input
-
 
 def main():
+    # Create ArgumentParser object
+    parser = argparse.ArgumentParser(description='User can type one of two arguments: [tournament year] \n'
+                                                 'to webscrape data on tournaments from a specific year or \n'
+                                                 '[ranking year number_of_players] \n'
+                                                 ' to show the x ranked top players from a specific year')
 
-    user = verify_input(input("Type one of two options: 'head2head' or 'ranking': "))
-    if user == 'head2head':
-        tournaments.main()
-    if user == 'ranking':
-        rankings.main()
+    # Add command-line arguments
+    subparsers = parser.add_subparsers(dest='command', help='Command to execute')
 
-##################################
-    parser = argparse.ArgumentParser(description='scrape_all top_players_start_with_a')
-        parser.add_argument('-w', action='store_true',
-                            help='Print "hello there!" message')
-        parser.add_argument("operation", type=str,
-                            help='Type an operation from the following list: add, subtract, multiply, divide')
-        parser.add_argument("first_number", type=float,
-                            help='Type an integer value')
-        parser.add_argument("second_number", type=float,
-                            help='Type an integer value')
+    # Subparser for 'tournaments' command
+    parser_tournaments = subparsers.add_parser('tournaments', help='Prints all tournaments from a specified year')
+    parser_tournaments.add_argument('year', type=str, default='2023', help='Year of the tournaments')
 
-        input_args = parser.parse_args()
+    # Subparser for 'ranking' command
+    parser_ranking = subparsers.add_parser('ranking', help='Prints ranking of top x players from a specified year')
+    parser_ranking.add_argument('year', type=str, help='Year of the ranking')
+    parser_ranking.add_argument('number_of_players', type=str, help='Number of players for the ranking')
 
-        if input_args.w:
-            print("Hello there!")
+    args = parser.parse_args()
 
-        result = operator(input_args.first_number,
-                          input_args.second_number, input_args.operation)
-        print(result)
+    # Execute the command based on the provided arguments
+    if args.command == 'tournaments':
+        print(f"Executing 'tournaments' command for the year {args.year}")
+        print("Loading...")
+        tournaments.main(args.year)
+    elif args.command == 'ranking':
+        print(f"Executing 'ranking' command for the year {args.year} with {args.number_of_players} players")
+        print("Loading...")
+        rankings.main(args.number_of_players, args.year)
+    else:
+        print("Invalid command. Supported commands: tournaments, ranking")
 
 
 if __name__ == "__main__":
     main()
+
+

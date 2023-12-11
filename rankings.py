@@ -1,44 +1,54 @@
 from tennis_logger import logger
 import time
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from tabulate import tabulate
+import tournaments
 
 
-def get_players_info(driver):
-    """
-    Fetches tennis player ranking information from a web page and returns tabulated data.
+def select_num_display_results(driver):
+    button_selector = "#rankingsTable-header > div > div > div.actions.btn-group > div:nth-child(2) > button"
+    button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable(
+            (By.CSS_SELECTOR,
+             button_selector))
+    )
+    button.click()
 
-    Args:
-        driver (WebDriver): The Selenium WebDriver instance for automated web browsing.
-        display_num (str): The desired number of displayed results.
+    dropdown_selector = "#rankingsTable-header > div > div > div.actions.btn-group > div.dropdown.btn-group.open > ul"
+    dropdown_menu = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located(
+            (By.CSS_SELECTOR,
+             dropdown_selector))
+    )
 
-    Returns:
-        list: A list containing tabulated player data.
-    """
+    option_display = WebDriverWait(dropdown_menu, 10).until(
+        EC.element_to_be_clickable((By.LINK_TEXT, "All"))
+    )
+    option_display.click()
+
+
+def select_year(driver, year='2023'):
+    seasons_button = "season"
+    button_year = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable(
+            (By.ID, seasons_button))
+    )
+    button_year.click()
+
+    time.sleep(2)
+    select = Select(button_year)
+    select.select_by_value(year)
+
+
+def get_players_info(driver, year='2023'):
+
     try:
         # Clicking button responsible for number of display results.
-        button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable(
-                (By.CSS_SELECTOR,
-                 "#rankingsTable-header > div > div > div.actions.btn-group > div:nth-child(2) > button"))
-        )
-        button.click()
-
-        # Locating the dropdown menu options
-        dropdown_menu = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "#rankingsTable-header > div > div > "
-                                                             "div.actions.btn-group > div.dropdown.btn-group.open "
-                                                             "> ul"))
-        )
-
-        # Selecting number of display results as 100
-        option_display = WebDriverWait(dropdown_menu, 10).until(
-            EC.element_to_be_clickable((By.LINK_TEXT, "All"))
-        )
-        option_display.click()
+        select_num_display_results(driver)
+        select_year(driver, year)
 
         # Extracts table
         time.sleep(2)
@@ -49,35 +59,30 @@ def get_players_info(driver):
         logger.error(f"{e}: Failed to fetch all rows.")
         driver.quit()
         return []
-    return get_tabulated_data(player_rows)
+    return player_rows
 
 
-def get_tabulated_data(player_rows):
-    """
-    Extracts and tabulates player information from a list of player rows.
+def get_tabulated_data(player_rows, num):
 
-    Args:
-        player_rows (list): List of Selenium WebElement representing player rows.
-
-    Returns:
-        None: Prints the tabulated player information.
-    """
     players_info = []
-    for row in player_rows:
+    for i, row in enumerate(player_rows):
         try:
-            cells = row.find_elements_by_tag_name('td')
-            row_data = {
-                'ranking': cells[0].text.split(" ")[0],
-                'best rank': cells[1].text,
-                'country': cells[2].text,
-                'name': cells[3].text,
-                '+/- position': cells[4].text,
-                '+/- points': cells[5].text
-            }
-            players_info.append([row_data['ranking'], row_data['best rank'],
-                                row_data['name'], row_data['country'],
-                                row_data['+/- position'], row_data['+/- points']])
-            logger.info(f"Player {row_data['name']} added to list.")
+            if i < int(num):
+                cells = row.find_elements_by_tag_name('td')
+                row_data = {
+                    'ranking': cells[0].text.split(" ")[0],
+                    'best rank': cells[1].text,
+                    'country': cells[2].text,
+                    'name': cells[3].text,
+                    '+/- position': cells[4].text,
+                    '+/- points': cells[5].text
+                }
+                players_info.append([row_data['ranking'], row_data['best rank'],
+                                    row_data['name'], row_data['country'],
+                                    row_data['+/- position'], row_data['+/- points']])
+                logger.info(f"Player {row_data['name']} added to list.")
+            else:
+                break
         except Exception as e:
             logger.info(f"{e}: Failed to extract information on player.")
 
@@ -86,41 +91,7 @@ def get_tabulated_data(player_rows):
                                 ], tablefmt="pretty"))
 
 
-def verify_input(num):
-    """
-    Validates user input for the number of top tennis players' rankings to display.
-
-    Args:
-        num (str): The user-provided input for the number of players.
-
-    Returns:
-        str: The valid input for the number of top tennis players' rankings.
-    """
-    while True:
-        if num not in ['20', '50', '100']:
-            print("Sorry, that is not a valid input.")
-            num = input("Please select the number of top tennis players' rankings you would "
-                        "like to display: 20, 50, or 100: ")
-        else:
-            print("Just a moment...\n")
-            return num
-
-
-# def menu():
-#     """
-#     Displays the ATP Rankings menu and retrieves user input for the number of players.
-#
-#     Returns:
-#         str: The valid input for the number of top tennis players' rankings.
-#     """
-#     print("\n *** ATP RANKINGS *** \n")
-#     num_display = verify_input(input("Please select the number of top tennis players' rankings you would "
-#                                      "like to display: 20, 50, or 100: "))
-#     return num_display
-
-
-def main():
-
+def main(number_of_players, year='2023'):
     driver = webdriver.Chrome()
     player_ranking_url = "https://www.ultimatetennisstatistics.com/rankingsTable"
     try:
@@ -130,7 +101,7 @@ def main():
         logger.error(f"{e}: Failed to fetch URL: {player_ranking_url}")
         driver.quit()
 
-    get_players_info(driver)
+    get_tabulated_data(get_players_info(driver, year), number_of_players)
     driver.quit()
 
 
