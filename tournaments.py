@@ -27,7 +27,8 @@ def select_top_player_checkbox(driver):
     option_display = WebDriverWait(dropdown_menu, 10).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, option))
     )
-    #option_display.click()
+    if not option_display.is_selected():
+        option_display.click()
 
 
 def select_season(driver, year):
@@ -103,10 +104,10 @@ def get_tabulated_data(rows):
                 'name': cells[0].text,
                 'level': cells[1].text,
                 'surface': cells[2].text,
-                'part': cells[5].text,
-                'str': cells[6].text,
-                'elo': cells[7].text,
-                'winner': " ".join(cells[8].text.split()[1:])
+                'part': cells[4].text,
+                'str': cells[5].text,
+                'elo': cells[6].text,
+                'winner': " ".join(cells[7].text.split()[1:])
             }
             players_info.append([row_data['name'], row_data['level'],
                                  row_data['surface'], row_data['part'],
