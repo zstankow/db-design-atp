@@ -27,7 +27,7 @@ def select_top_player_checkbox(driver):
     option_display = WebDriverWait(dropdown_menu, 10).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, option))
     )
-    option_display.click()
+    #option_display.click()
 
 
 def select_season(driver, year):
@@ -97,31 +97,31 @@ def get_tabulated_data(rows):
     players_info = []
     for row in rows:
         try:
+
             cells = row.find_elements(By.TAG_NAME, 'td')
             row_data = {
                 'name': cells[0].text,
                 'level': cells[1].text,
                 'surface': cells[2].text,
-                'part': cells[4].text,
-                'str': cells[5].text,
-                'elo': cells[6].text,
-                'winner': " ".join(cells[7].text.split()[1:])
+                'part': cells[5].text,
+                'str': cells[6].text,
+                'elo': cells[7].text,
+                'winner': " ".join(cells[8].text.split()[1:])
             }
             players_info.append([row_data['name'], row_data['level'],
-                                row_data['surface'], row_data['part'],
-                                row_data['str'], row_data['elo'], row_data['winner']
-                                ])
+                                 row_data['surface'], row_data['part'],
+                                 row_data['str'], row_data['elo'], row_data['winner']
+                                 ])
             logger.info(f"Tournament {row_data['name']} added to list.")
         except Exception as e:
             logger.info(f"{e}: Failed to extract information on tournament.")
 
     print("\n", tabulate(players_info, headers=[
         "Tournament Name", "Level", "Surface", "Part.", "Str.", "Elo", "Winner"
-                                ], tablefmt="pretty"))
+    ], tablefmt="pretty"))
 
 
 def main(year='2023'):
-
     driver = webdriver.Chrome()
     tournament_url = "https://www.ultimatetennisstatistics.com/tournaments"
     try:
@@ -133,7 +133,6 @@ def main(year='2023'):
 
     get_tournaments_info(driver, year)
     driver.quit()
-
 
 # if __name__ == '__main__':
 #     main('2015')
