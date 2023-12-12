@@ -52,7 +52,7 @@ def get_players_info(driver, year='2023'):
 
         # Extracts table
         time.sleep(2)
-        player_rows = driver.find_elements_by_css_selector('tbody tr')
+        player_rows = driver.find_elements(By.CSS_SELECTOR, 'tbody tr')
         logger.info(f"Successfully fetched all rows from table.")
 
     except Exception as e:
@@ -68,7 +68,7 @@ def get_tabulated_data(player_rows, num):
     for i, row in enumerate(player_rows):
         try:
             if i < int(num):
-                cells = row.find_elements_by_tag_name('td')
+                cells = row.find_elements(By.TAG_NAME, 'td')
                 row_data = {
                     'ranking': cells[0].text.split(" ")[0],
                     'best rank': cells[1].text,
@@ -106,4 +106,4 @@ def main(number_of_players, year='2023'):
 
 
 if __name__ == '__main__':
-    main()
+    main('22', '2012'))

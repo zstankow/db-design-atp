@@ -7,7 +7,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from tabulate import tabulate
 
 
-def select_top_player_checkbox(driver):
+def click_all_checkboxes(dropdown, option):
+    option_display = WebDriverWait(dropdown, 10).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, option))
+    )
+    if not option_display.is_selected():
+        option_display.click()
+
+
+def select_checkboxes(driver):
     checkbox_button = "#tournamentsTable-header > div > div > div.actions.btn-group > div:nth-child(3) > button"
     button = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located(
@@ -23,12 +31,13 @@ def select_top_player_checkbox(driver):
              dropdown_selector))
     )
 
-    option = 'input[name="topPlayers"]'
-    option_display = WebDriverWait(dropdown_menu, 10).until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, option))
-    )
-    if not option_display.is_selected():
-        option_display.click()
+    checkbox_list_str = ["name", "levels", "surfaces", "speeds",
+                         "eventCount", "seasons", "playerCount", "participation",
+                         "strength", "averageEloRating", "topPlayers"]
+
+    for box in checkbox_list_str:
+        option = f'input[name="{box}"]'
+        click_all_checkboxes(dropdown_menu, option)
 
 
 def select_season(driver, year):
@@ -69,7 +78,7 @@ def get_tournaments_info(driver, year='2023'):
     try:
         select_num_display_results(driver)
         select_season(driver, year)
-        select_top_player_checkbox(driver)
+        select_checkboxes(driver)
 
         # Extracts table
         time.sleep(2)
@@ -104,10 +113,10 @@ def get_tabulated_data(rows):
                 'name': cells[0].text,
                 'level': cells[1].text,
                 'surface': cells[2].text,
-                'part': cells[4].text,
-                'str': cells[5].text,
-                'elo': cells[6].text,
-                'winner': " ".join(cells[7].text.split()[1:])
+                'part': cells[7].text,
+                'str': cells[8].text,
+                'elo': cells[9].text,
+                'winner': " ".join(cells[10].text.split()[1:])
             }
             players_info.append([row_data['name'], row_data['level'],
                                  row_data['surface'], row_data['part'],
@@ -135,5 +144,6 @@ def main(year='2023'):
     get_tournaments_info(driver, year)
     driver.quit()
 
-# if __name__ == '__main__':
-#     main('2015')
+
+if __name__ == '__main__':
+    main('2015')
