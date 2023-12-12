@@ -2,7 +2,6 @@ import rankings
 import tournaments
 import argparse
 
-
 def main():
     # Create ArgumentParser object
     parser = argparse.ArgumentParser(description='User can type one of two arguments: [tournament year] \n'
