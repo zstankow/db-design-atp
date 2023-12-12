@@ -1,4 +1,7 @@
-tennis.log
+itennis.log
 chromedriver.exe
 tournaments_copy.py
- __pycache__/*
+__pycache__/
+*.pyc
+*.pyo
+*.pyd

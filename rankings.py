@@ -106,4 +106,4 @@ def main(number_of_players, year='2023'):
 
 
 if __name__ == '__main__':
-    main()
+    main('20', '2016')
