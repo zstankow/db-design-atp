@@ -133,7 +133,3 @@ def main(year='2023'):
 
     get_tournaments_info(driver, year)
     driver.quit()
-
-
-# if __name__ == '__main__':
-#     main('2015')
