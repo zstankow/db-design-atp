@@ -72,9 +72,9 @@ def get_tournaments_info(driver, year='2023'):
 
         # Extracts table
         time.sleep(2)
-        table = driver.find_element_by_id('tournamentsTable')
+        table = driver.find_element(By.ID, 'tournamentsTable')
         time.sleep(2)
-        tournament_rows = table.find_elements_by_css_selector('tbody tr')
+        tournament_rows = table.find_elements(By.CSS_SELECTOR, 'tbody tr')
         logger.info(f"Successfully fetched all rows from table.")
 
     except Exception as e:
@@ -97,7 +97,7 @@ def get_tabulated_data(rows):
     players_info = []
     for row in rows:
         try:
-            cells = row.find_elements_by_tag_name('td')
+            cells = row.find_elements(By.TAG_NAME, 'td')
             row_data = {
                 'name': cells[0].text,
                 'level': cells[1].text,
