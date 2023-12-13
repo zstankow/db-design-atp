@@ -56,7 +56,28 @@ def get_players_info(driver, year='2023'):
         logger.error(f"{e}: Failed to fetch all rows.")
         driver.quit()
         return []
-    return player_rows
+    players_info = []
+    for i, row in enumerate(player_rows):
+        try:
+            if i < int(num):
+                cells = row.find_elements(By.TAG_NAME, 'td')
+                row_data = {
+                    'ranking': cells[0].text.split(" ")[0],
+                    'best rank': cells[1].text,
+                    'country': cells[2].text,
+                    'name': cells[3].text,
+                    '+/- position': cells[4].text,
+                    '+/- points': cells[5].text
+                }
+                players_info.append([row_data['ranking'], row_data['best rank'],
+                                     row_data['name'], row_data['country'],
+                                     row_data['+/- position'], row_data['+/- points']])
+                logger.info(f"Player {row_data['name']} added to list.")
+            else:
+                break
+        except Exception as e:
+            logger.info(f"{e}: Failed to extract information on player.")
+    return players_info
 
 
 def get_tabulated_data(player_rows, num):

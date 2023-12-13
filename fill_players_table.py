@@ -4,7 +4,7 @@ import pymysql
 connection = pymysql.connect(
     host="localhost",
     user="root",
-    password="nathszpil97",
+    password="root",
     database="tennis"
 )
 
@@ -13,7 +13,7 @@ BEST_RANK = 1
 COUNTRY = 3
 
 
-def insert_player_in_table(players_info):
+def insert_players(players_info):
     with connection.cursor() as cursor:
         for player_data in players_info:
             # Check if the name already exists in the players table
@@ -85,4 +85,4 @@ example_info = [['1', '1', 'Novak Djokovic', 'SRB', '-', '-'], ['2', '1', 'Roger
                 ['98', '64', 'Tobias Kamke', 'GER', '-', '-'], ['99', '79', 'Adrian Ungur', 'ROU', '-', '-'],
                 ['100', '14', 'Ivo Karlovic', 'CRO', '-', '-']]
 
-insert_player_in_table(example_info)
+insert_players(example_info)

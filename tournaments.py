@@ -108,12 +108,13 @@ def get_tabulated_data(rows):
                 'winner': " ".join(cells[10].text.split()[1:])
             }
             tournament_info.append([row_data['name'], row_data['level'],
-                                 row_data['surface'], row_data['part'],
-                                 row_data['str'], row_data['elo'], row_data['winner']
-                                 ])
+                                    row_data['surface'], row_data['part'],
+                                    row_data['str'], row_data['elo'], row_data['winner']
+                                    ])
             logger.info(f"Tournament {row_data['name']} added to list.")
         except Exception as e:
             logger.info(f"{e}: Failed to extract information on tournament.")
+    print(tournament_info)
     return tournament_info
 
 

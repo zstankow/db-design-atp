@@ -15,7 +15,7 @@ def print_tabulated_tournament_data(tournament_info):
 
 def print_tabulated_players_data(players_info):
     print("\n", tabulate(players_info, headers=[
-            "Current Ranking", "Best Ranking", "Name", "Country", "+/- Positions", "+/- Points"
+        "Current Ranking", "Best Ranking", "Name", "Country", "+/- Positions", "+/- Points"
     ], tablefmt="pretty"))
 
 
@@ -55,6 +55,7 @@ def main():
         print("Loading...")
         table = tournaments.main(args.year)
         print_tabulated_tournament_data(table)
+
 
     elif args.command == 'ranking':
         print(f"Executing 'ranking' command for the year {args.year} with {args.number_of_players} players")
