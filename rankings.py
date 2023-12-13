@@ -44,7 +44,6 @@ def select_year(driver, year='2023'):
 
 
 def get_players_info(driver, year='2023'):
-
     try:
         # Clicking button responsible for number of display results.
         select_num_display_results(driver)
@@ -63,7 +62,6 @@ def get_players_info(driver, year='2023'):
 
 
 def get_tabulated_data(player_rows, num):
-
     players_info = []
     for i, row in enumerate(player_rows):
         try:
@@ -78,8 +76,8 @@ def get_tabulated_data(player_rows, num):
                     '+/- points': cells[5].text
                 }
                 players_info.append([row_data['ranking'], row_data['best rank'],
-                                    row_data['name'], row_data['country'],
-                                    row_data['+/- position'], row_data['+/- points']])
+                                     row_data['name'], row_data['country'],
+                                     row_data['+/- position'], row_data['+/- points']])
                 logger.info(f"Player {row_data['name']} added to list.")
             else:
                 break
@@ -88,7 +86,7 @@ def get_tabulated_data(player_rows, num):
 
     print("\n", tabulate(players_info, headers=[
         "Current Ranking", "Best Ranking", "Name", "Country", "+/- Positions", "+/- Points"
-                                ], tablefmt="pretty"))
+    ], tablefmt="pretty"))
 
 
 def main(number_of_players, year='2023'):

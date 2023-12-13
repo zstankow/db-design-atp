@@ -4,7 +4,7 @@ sql_script = '''
 CREATE TABLE players (
     name VARCHAR(255) PRIMARY KEY,
     best_rank INTEGER,
-    country_id INTEGER
+    country_id VARCHAR(255)
 );
 
 -- Create tournaments table
