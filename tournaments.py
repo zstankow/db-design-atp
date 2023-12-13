@@ -4,7 +4,6 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from tabulate import tabulate
 
 
 def click_all_checkboxes(dropdown, option):
@@ -95,19 +94,9 @@ def get_tournaments_info(driver, year='2023'):
 
 
 def get_tabulated_data(rows):
-    """
-    Extracts and tabulates player information from a list of player rows.
-
-    Args:
-        rows (list): List of Selenium WebElement representing player rows.
-
-    Returns:
-        None: Prints the tabulated player information.
-    """
-    players_info = []
+    tournament_info = []
     for row in rows:
         try:
-
             cells = row.find_elements(By.TAG_NAME, 'td')
             row_data = {
                 'name': cells[0].text,
@@ -118,20 +107,17 @@ def get_tabulated_data(rows):
                 'elo': cells[9].text,
                 'winner': " ".join(cells[10].text.split()[1:])
             }
-            players_info.append([row_data['name'], row_data['level'],
+            tournament_info.append([row_data['name'], row_data['level'],
                                  row_data['surface'], row_data['part'],
                                  row_data['str'], row_data['elo'], row_data['winner']
                                  ])
             logger.info(f"Tournament {row_data['name']} added to list.")
         except Exception as e:
             logger.info(f"{e}: Failed to extract information on tournament.")
-
-    print("\n", tabulate(players_info, headers=[
-        "Tournament Name", "Level", "Surface", "Part.", "Str.", "Elo", "Winner"
-    ], tablefmt="pretty"))
+    return tournament_info
 
 
-def main(year='2023'):
+def call_driver():
     driver = webdriver.Chrome()
     tournament_url = "https://www.ultimatetennisstatistics.com/tournaments"
     try:
@@ -140,10 +126,11 @@ def main(year='2023'):
     except Exception as e:
         logger.error(f"{e}: Failed to fetch URL: {tournament_url}")
         driver.quit()
+    return driver
 
-    get_tournaments_info(driver, year)
+
+def main(year='2023'):
+    driver = call_driver()
+    table = get_tournaments_info(driver, year)
     driver.quit()
-
-
-if __name__ == '__main__':
-    main('2015')
+    return table

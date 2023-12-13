@@ -4,8 +4,6 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from tabulate import tabulate
-import tournaments
 
 
 def select_num_display_results(driver):
@@ -43,19 +41,25 @@ def select_year(driver, year='2023'):
     select.select_by_value(year)
 
 
-def get_players_info(driver, num, year='2023'):
+def get_players_info(driver, year='2023'):
     try:
         # Clicking button responsible for number of display results.
         select_num_display_results(driver)
         select_year(driver, year)
+
         # Extracts table
         time.sleep(2)
         player_rows = driver.find_elements(By.CSS_SELECTOR, 'tbody tr')
         logger.info(f"Successfully fetched all rows from table.")
+
     except Exception as e:
         logger.error(f"{e}: Failed to fetch all rows.")
         driver.quit()
         return []
+    return player_rows
+
+
+def get_tabulated_data(player_rows, num):
     players_info = []
     for i, row in enumerate(player_rows):
         try:
@@ -70,20 +74,14 @@ def get_players_info(driver, num, year='2023'):
                     '+/- points': cells[5].text
                 }
                 players_info.append([row_data['ranking'], row_data['best rank'],
-                                     row_data['name'], row_data['country'],
-                                     row_data['+/- position'], row_data['+/- points']])
+                                    row_data['name'], row_data['country'],
+                                    row_data['+/- position'], row_data['+/- points']])
                 logger.info(f"Player {row_data['name']} added to list.")
             else:
                 break
         except Exception as e:
             logger.info(f"{e}: Failed to extract information on player.")
     return players_info
-
-
-def get_tabulated_data(players_info):
-    print("\n", tabulate(players_info, headers=[
-        "Current Ranking", "Best Ranking", "Name", "Country", "+/- Positions", "+/- Points"
-    ], tablefmt="pretty"))
 
 
 def main(number_of_players, year='2023'):
@@ -95,11 +93,7 @@ def main(number_of_players, year='2023'):
     except Exception as e:
         logger.error(f"{e}: Failed to fetch URL: {player_ranking_url}")
         driver.quit()
-    players_info = get_players_info(driver, number_of_players, year)
-    print(players_info)
-    get_tabulated_data(players_info)
+
+    table = get_tabulated_data(get_players_info(driver, year), number_of_players)
     driver.quit()
-
-
-if __name__ == '__main__':
-    main('100', '2012')
+    return table
