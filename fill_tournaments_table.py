@@ -99,7 +99,7 @@ def insert_tournaments(tournaments_info):
 
             # Insert data into the tournaments table
             query_insert = "INSERT INTO tournaments (name, level, surface, participation_perc, strength, avg_elo, winner) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            cursor.execute(query_insert, (name, level, surface, participation_perc, strength, avg_elo, winner))
+            cursor.execute(query_insert, (name, level, surface, float(participation_perc[:-1])/100, int(strength), avg_elo, winner))
             print("Row inserted successfully!")
     # Commit changes to the database
     connection.commit()

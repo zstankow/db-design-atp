@@ -3,19 +3,18 @@
 CREATE TABLE players (
     name VARCHAR(255) PRIMARY KEY,
     best_rank INTEGER,
-    country_id INTEGER
+    country_id VARCHAR(255)
 );
 
 -- Create tournaments table
 CREATE TABLE tournaments (
-    id INTEGER PRIMARY KEY,
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
     year INTEGER,
     name VARCHAR(255),
-    level INTEGER,
-    surface INTEGER,
+    level VARCHAR(255),
+    surface VARCHAR(255),
     winner VARCHAR(255),
     finalist VARCHAR(255),
-    no_events INTEGER,
     participation_perc FLOAT,
     strength INTEGER,
     avg_elo INTEGER
