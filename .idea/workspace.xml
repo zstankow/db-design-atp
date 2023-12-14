@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="update of sql db creation file + get_tournament_id" />
+    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="update of sql db creation file + get_tournament_id">
+      <change beforePath="$PROJECT_DIR$/data_collector.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_collector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insert_finals.py" beforeDir="false" afterPath="$PROJECT_DIR$/insert_finals.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -261,7 +264,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702574893479</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="update of sql db creation file + get_tournament_id">
+      <option name="closed" value="true" />
+      <created>1702580166318</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1702580166318</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

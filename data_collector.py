@@ -28,8 +28,8 @@ def add_players_info():
     for year in range(conf["START"], conf["END"], -1):
         players_info = webscraper.scrape_rankings(conf["NUM"], str(year))
         insert_players(players_info)
-        logger.info(f"Player ranking information of year {year} added to database.")
-        print(f"Player ranking information of year {year} added to database.")
+        logger.info(f"Players ranking information of year {year} added to database.")
+        print(f"Players ranking information of year {year} added to database.")
 
 
 def insert_players(players_info):

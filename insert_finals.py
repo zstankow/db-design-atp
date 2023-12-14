@@ -22,6 +22,9 @@ def connect_to_mysql():
 
 
 def get_tournament_id(cursor, tournament_name, year):
+    """
+    get the id of a tournament depending on a name and a year
+    """
     query = "SELECT id FROM tournaments WHERE name = %s AND year = %s"
     cursor.execute(query, (tournament_name, year))
     row = cursor.fetchone()
