@@ -1,4 +1,17 @@
 import pymysql
+import rankings
+from connect_to_mysql import connect_to_mysql
+import json
+
+with open('config.json', 'r') as file:
+    constants_data = json.load(file)
+
+NAME = constants_data['NAME']
+BEST_RANK = constants_data['BEST_RANK']
+COUNTRY = constants_data['COUNTRY']
+NUM = constants_data['NUM']
+START = constants_data['START']
+END = constants_data['END']
 
 # Establish a connection to the MySQL database
 connection = pymysql.connect(
@@ -8,9 +21,11 @@ connection = pymysql.connect(
     database="tennis"
 )
 
-NAME = 2
-BEST_RANK = 1
-COUNTRY = 3
+
+def get_players_info():
+    for year in range(START, END, -1):
+        players_info = rankings.run(str(NUM), str(year))
+        insert_players(players_info)
 
 
 def insert_players(players_info):
@@ -84,4 +99,3 @@ example_info = [['1', '1', 'Novak Djokovic', 'SRB', '-', '-'], ['2', '1', 'Roger
                 ['96', '22', 'Albert Montanes', 'ESP', '-', '-'], ['97', '20', 'Guido Pella', 'ARG', '-', '-'],
                 ['98', '64', 'Tobias Kamke', 'GER', '-', '-'], ['99', '79', 'Adrian Ungur', 'ROU', '-', '-'],
                 ['100', '14', 'Ivo Karlovic', 'CRO', '-', '-']]
-

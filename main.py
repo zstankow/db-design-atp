@@ -4,8 +4,8 @@ from create_sql_file import create_sql_file
 import argparse
 from connect_to_mysql import connect_to_mysql
 
-from fill_players_table import insert_players
-from fill_tournaments_table import insert_tournaments
+from fill_players_table import get_players_info
+from fill_tournaments_table import get_tournament_info
 
 
 def execute_sql_file():
@@ -78,6 +78,7 @@ def main():
         execute_sql_file()
         get_players_info()
         get_tournament_info()
+
 
     else:
         print("Invalid command. Supported commands: tournaments, ranking")
