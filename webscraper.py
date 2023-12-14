@@ -248,14 +248,14 @@ def print_ranking_data(players_info):
     ], tablefmt="pretty"))
 
 
-def run_tournaments(year='2023'):
+def scrape_tournaments(year='2023'):
     driver = call_driver(conf["TOURNAMENTS_URL"])
     table = get_tournaments_info(driver, year)
     driver.quit()
     return table
 
 
-def run_rankings(number_of_players="200", year='2023'):
+def scrape_rankings(number_of_players="200", year='2023'):
     driver = call_driver(conf["RANKING_URL"])
     table = get_tabulated_ranking_data(get_players_info(driver, year), number_of_players)
     driver.quit()
