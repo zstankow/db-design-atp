@@ -96,8 +96,8 @@ def main():
         execute_sql_file()
         print(f"Database 'tennis' created.")
         print(f"Collecting data... This will take a few minutes...")
-        add_players_info()
         add_tournament_info()
+        add_players_info()
 
     else:
         print("Invalid command. Supported commands: tournaments, ranking, empty_db, create_db.")

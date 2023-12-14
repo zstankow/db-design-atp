@@ -79,15 +79,14 @@ def insert_tournaments(tournaments_info):
             for tournament_data in tournaments_info:
                 # Extracting tournament data
                 name, level, surface, year, participation_perc, strength, avg_elo, winner = tournament_data
-
                 # Insert data into the tournaments table
                 query_insert = ("INSERT INTO tournaments "
-                                "(name, level, surface, year, participation_perc, strength, avg_elo, winner) "
-                                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)")
+                                "(name, level, surface, year, participation_perc, strength, avg_elo) "
+                                "VALUES (%s, %s, %s, %s, %s, %s, %s)")
                 cursor.execute(query_insert,
                                (name, level, surface, int(year), float(participation_perc[:-1]) / 100,
                                 int(strength),
-                                avg_elo, winner))
+                                avg_elo))
                 logger.info(f"Successfully inserted '{name}' tournament into table.")
         except Exception as e:
             logger.info(f"{e}: Failed to insert tournament into table.")

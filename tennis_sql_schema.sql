@@ -18,8 +18,6 @@
         name VARCHAR(255),
         level VARCHAR(255),
         surface VARCHAR(255),
-        winner VARCHAR(255),
-        finalist VARCHAR(255),
         participation_perc FLOAT,
         strength INTEGER,
         avg_elo INTEGER
@@ -27,12 +25,14 @@
 
     -- Create finals table
     CREATE TABLE finals (
-        id INTEGER,
+        id INTEGER AUTO_INCREMENT PRIMARY KEY,
+        tournament_id INTEGER
+        tournament name VARCHAR(255),
         winner VARCHAR(255),
         loser VARCHAR(255),
+        result VARCHAR(255)
         FOREIGN KEY (id) REFERENCES tournaments(id),
         FOREIGN KEY (winner) REFERENCES players(name),
         FOREIGN KEY (loser) REFERENCES players(name),
-        PRIMARY KEY (id, winner, loser)
     );
     
