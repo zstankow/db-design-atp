@@ -12,14 +12,8 @@ COUNTRY = constants_data['COUNTRY']
 NUM = constants_data['NUM']
 START = constants_data['START']
 END = constants_data['END']
-
-# Establish a connection to the MySQL database
-connection = pymysql.connect(
-    host="localhost",
-    user="root",
-    password="root",
-    database="tennis"
-)
+USER = constants_data['USER']
+PASSWORD = constants_data['PASSWORD']
 
 
 def get_players_info():
@@ -29,6 +23,13 @@ def get_players_info():
 
 
 def insert_players(players_info):
+
+    connection = pymysql.connect(
+        host="localhost",
+        user=USER,
+        password=PASSWORD,
+        database="tennis")
+
     with connection.cursor() as cursor:
         for player_data in players_info:
             # Check if the name already exists in the players table

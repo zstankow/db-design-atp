@@ -8,6 +8,8 @@ with open('config.json', 'r') as file:
 
 START = constants_data['START']
 END = constants_data['END']
+USER = constants_data['USER']
+PASSWORD = constants_data['PASSWORD']
 
 
 def get_tournament_info():
@@ -16,16 +18,13 @@ def get_tournament_info():
         insert_tournaments(tournaments_info)
 
 
-# Establish a connection to the MySQL database
-connection = pymysql.connect(
-    host="localhost",
-    user="root",
-    password="root",
-    database="tennis"
-)
-
 
 def insert_tournaments(tournaments_info):
+    connection = pymysql.connect(
+        host="localhost",
+        user=USER,
+        password=PASSWORD,
+        database="tennis")
     with connection.cursor() as cursor:
         for tournament_data in tournaments_info:
             # Extracting tournament data

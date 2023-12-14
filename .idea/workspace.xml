@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="useless files">
+    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="delete useless line">
+      <change beforePath="$PROJECT_DIR$/fill_players_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/fill_players_table.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fill_tournaments_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/fill_tournaments_table.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,6 +95,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="fill_tournaments_table" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="db-design-atp" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/fill_tournaments_table.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="db-design-atp" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -137,6 +159,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.fill_tournaments_table" />
       <item itemvalue="Python.create_empty_db" />
       <item itemvalue="Python.create_sql_file" />
       <item itemvalue="Python.main" />
@@ -145,6 +168,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.fill_tournaments_table" />
         <item itemvalue="Python.create_sql_file" />
         <item itemvalue="Python.tournaments" />
         <item itemvalue="Python.create_empty_db" />
@@ -176,13 +200,22 @@
       <option name="project" value="LOCAL" />
       <updated>1702548362454</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="delete useless line">
+      <option name="closed" value="true" />
+      <created>1702549022837</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1702549022837</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="commit useless files" />
     <MESSAGE value="all options work fine" />
     <MESSAGE value="useless files" />
-    <option name="LAST_COMMIT_MESSAGE" value="useless files" />
+    <MESSAGE value="delete useless line" />
+    <option name="LAST_COMMIT_MESSAGE" value="delete useless line" />
   </component>
 </project>
