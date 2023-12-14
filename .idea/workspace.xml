@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="">
+    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="commit useless files">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -143,8 +143,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.tournaments" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.tournaments" />
         <item itemvalue="Python.create_empty_db" />
         <item itemvalue="Python.create_sql_file" />
       </list>
@@ -160,5 +160,9 @@
       <updated>1702377798731</updated>
     </task>
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="commit useless files" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit useless files" />
   </component>
 </project>

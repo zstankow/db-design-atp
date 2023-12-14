@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from tabulate import tabulate
 
 
 def click_all_checkboxes(dropdown, option):
@@ -47,6 +48,15 @@ def select_season(driver, year):
     )
     button_year.click()
 
+    select = Select(button_year)
+    select.select_by_value(year)
+
+    seasons_button = "toSeason"
+    button_year = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable(
+            (By.ID, seasons_button))
+    )
+    button_year.click()
     select = Select(button_year)
     select.select_by_value(year)
 
@@ -102,19 +112,19 @@ def get_tabulated_data(rows):
                 'name': cells[0].text,
                 'level': cells[1].text,
                 'surface': cells[2].text,
+                'seasons': cells[5].text,
                 'part': cells[7].text,
                 'str': cells[8].text,
                 'elo': cells[9].text,
                 'winner': " ".join(cells[10].text.split()[1:])
             }
             tournament_info.append([row_data['name'], row_data['level'],
-                                    row_data['surface'], row_data['part'],
-                                    row_data['str'], row_data['elo'], row_data['winner']
-                                    ])
+                                 row_data['surface'], row_data['seasons'], row_data['part'],
+                                 row_data['str'], row_data['elo'], row_data['winner']
+                                 ])
             logger.info(f"Tournament {row_data['name']} added to list.")
         except Exception as e:
             logger.info(f"{e}: Failed to extract information on tournament.")
-    print(tournament_info)
     return tournament_info
 
 
@@ -130,7 +140,13 @@ def call_driver():
     return driver
 
 
-def main(year='2023'):
+def print_data(tournament_info):
+    print("\n", tabulate(tournament_info, headers=[
+        "Tournament Name", "Level", "Surface", "Season", "Part.", "Str.", "Elo.", "Winner"
+    ], tablefmt="pretty"))
+
+
+def run(year='2023'):
     driver = call_driver()
     table = get_tournaments_info(driver, year)
     driver.quit()

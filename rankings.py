@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from tabulate import tabulate
 
 
 def select_num_display_results(driver):
@@ -35,7 +36,6 @@ def select_year(driver, year='2023'):
             (By.ID, seasons_button))
     )
     button_year.click()
-
     time.sleep(2)
     select = Select(button_year)
     select.select_by_value(year)
@@ -56,28 +56,7 @@ def get_players_info(driver, year='2023'):
         logger.error(f"{e}: Failed to fetch all rows.")
         driver.quit()
         return []
-    players_info = []
-    for i, row in enumerate(player_rows):
-        try:
-            if i < int(num):
-                cells = row.find_elements(By.TAG_NAME, 'td')
-                row_data = {
-                    'ranking': cells[0].text.split(" ")[0],
-                    'best rank': cells[1].text,
-                    'country': cells[2].text,
-                    'name': cells[3].text,
-                    '+/- position': cells[4].text,
-                    '+/- points': cells[5].text
-                }
-                players_info.append([row_data['ranking'], row_data['best rank'],
-                                     row_data['name'], row_data['country'],
-                                     row_data['+/- position'], row_data['+/- points']])
-                logger.info(f"Player {row_data['name']} added to list.")
-            else:
-                break
-        except Exception as e:
-            logger.info(f"{e}: Failed to extract information on player.")
-    return players_info
+    return player_rows
 
 
 def get_tabulated_data(player_rows, num):
@@ -105,7 +84,13 @@ def get_tabulated_data(player_rows, num):
     return players_info
 
 
-def main(number_of_players, year='2023'):
+def print_data(players_info):
+    print("\n", tabulate(players_info, headers=[
+            "Current Ranking", "Best Ranking", "Name", "Country", "+/- Positions", "+/- Points"
+    ], tablefmt="pretty"))
+
+
+def run(number_of_players="200", year='2023'):
     driver = webdriver.Chrome()
     player_ranking_url = "https://www.ultimatetennisstatistics.com/rankingsTable"
     try:

@@ -2,21 +2,18 @@ import rankings
 import tournaments
 from create_sql_file import create_sql_file
 import argparse
-import pymysql
-import pymysql.cursors
-from tabulate import tabulate
+from connect_to_mysql import connect_to_mysql
+
+from fill_players_table import get_players_info
+from fill_tournaments_table import get_tournament_info
 
 
-def print_tabulated_tournament_data(tournament_info):
-    print("\n", tabulate(tournament_info, headers=[
-        "Tournament Name", "Level", "Surface", "Part.", "Str.", "Elo", "Winner"
-    ], tablefmt="pretty"))
-
-
-def print_tabulated_players_data(players_info):
-    print("\n", tabulate(players_info, headers=[
-        "Current Ranking", "Best Ranking", "Name", "Country", "+/- Positions", "+/- Points"
-    ], tablefmt="pretty"))
+def execute_sql_file():
+    connection, cursor = connect_to_mysql()
+    with open('tennis_database.sql', 'r') as file:
+        sql_commands = file.read()
+        cursor.execute(sql_commands)
+        connection.commit()
 
 
 def main():
@@ -39,46 +36,37 @@ def main():
     parser_ranking.add_argument('number_of_players', type=str, help='Number of players for the ranking')
 
     # Subparser for 'empty_db' command
-    parser_empty_db = subparsers.add_parser('empty_db', help='Creates an mysql database "tennis" with empty tables')
-    parser_empty_db.add_argument('user', type=str, help='MySQL user')
-    parser_empty_db.add_argument('password', type=str, help='MySQL password')
+    subparsers.add_parser('empty_db', help='Creates a mysql database "tennis" with empty tables')
 
     # Subparser for 'create_db' command
-    parser_db = subparsers.add_parser('create_db', help='Creates an mysql database "tennis" with filled tables')
-    parser_db.add_argument('user', type=str, help='MySQL user')
-    parser_db.add_argument('password', type=str, help='MySQL password')
+    subparsers.add_parser('create_db', help='Creates a mysql database "tennis" with filled tables')
     args = parser.parse_args()
 
     # Execute the command based on the provided arguments
     if args.command == 'tournaments':
         print(f"Executing 'tournaments' command for the year {args.year}")
         print("Loading...")
-        table = tournaments.main(args.year)
-        print_tabulated_tournament_data(table)
-
+        table = tournaments.run(args.year)
+        tournaments.print_data(table)
 
     elif args.command == 'ranking':
         print(f"Executing 'ranking' command for the year {args.year} with {args.number_of_players} players")
         print("Loading...")
-        table = rankings.main(args.number_of_players, args.year)
-        print_tabulated_players_data(table)
+        table = rankings.run(args.number_of_players, args.year)
+        rankings.print_data(table)
 
     elif args.command == 'empty_db':
         print(f"Creating empty database 'tennis'")
         create_sql_file()
+        execute_sql_file()
 
     elif args.command == 'create_db':
         print(f"Creating database 'tennis'")
         print(f"This will take a few minutes...")
         create_sql_file()
-        connection = pymysql.connect(host='localhost', user=args.user, password=args.password)
-        cursor = connection.cursor()
-
-        with open('tennis_database.sql', 'r') as file:
-            sql_commands = file.read()
-            cursor.execute(sql_commands)
-            connection.commit()
-            # HERE PLACE THE FUNCTION THAT FILLS THE TABLES
+        execute_sql_file()
+        get_players_info()
+        get_tournament_info()
 
     else:
         print("Invalid command. Supported commands: tournaments, ranking")
