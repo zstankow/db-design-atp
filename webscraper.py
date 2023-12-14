@@ -15,7 +15,7 @@ def select_num_display_results(driver, header, num):
     """
     Changes number of display results from default value to num
     """
-    button_selector = header + "> div > div > div.actions.btn-group > div:nth-child(2) > button"
+    button_selector = header + conf["NUM_DISPLAY_BUTTON"]
     button = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable(
             (By.CSS_SELECTOR,
@@ -23,7 +23,7 @@ def select_num_display_results(driver, header, num):
     )
     button.click()
 
-    dropdown_selector = header + "> div > div > div.actions.btn-group > div.dropdown.btn-group.open > ul"
+    dropdown_selector = header + conf["DROPDOWN_SELECTOR_1"]
     dropdown_menu = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located(
             (By.CSS_SELECTOR,
@@ -40,10 +40,9 @@ def select_year(driver, year='2023'):
     """
     Changes year of display results from default value to value of year parameter.
     """
-    seasons_button = "season"
     button_year = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable(
-            (By.ID, seasons_button))
+            (By.ID, conf["SEASONS_BUTTON"]))
     )
     button_year.click()
     time.sleep(2)
@@ -63,7 +62,7 @@ def get_players_info(driver, year='2023'):
 
         # Extracts table
         time.sleep(2)
-        player_rows = driver.find_elements(By.CSS_SELECTOR, 'tbody tr')
+        player_rows = driver.find_elements(By.CSS_SELECTOR, conf["ROWS"])
         logger.info(f"Successfully fetched all rows from table.")
 
     except Exception as e:
@@ -82,7 +81,7 @@ def get_tabulated_ranking_data(player_rows, num):
     for i, row in enumerate(player_rows):
         try:
             if i < int(num):
-                cells = row.find_elements(By.TAG_NAME, 'td')
+                cells = row.find_elements(By.TAG_NAME, conf["CELLS"])
                 row_data = {
                     'ranking': cells[0].text.split(" ")[0],
                     'best rank': cells[1].text,
@@ -117,7 +116,7 @@ def select_checkboxes(driver):
     """
     Selects all checkboxes on tournament webpage to ensure all columns are collected from table.
     """
-    checkbox_button = "#tournamentsTable-header > div > div > div.actions.btn-group > div:nth-child(3) > button"
+    checkbox_button = conf["TOURNAMENTS_TABLE_HEADER"] + conf["CHECKBOX_BUTTON"]
     button = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located(
             (By.CSS_SELECTOR,
@@ -125,7 +124,7 @@ def select_checkboxes(driver):
     )
     button.click()
 
-    dropdown_selector = "#tournamentsTable-header > div > div > div.actions.btn-group > div:nth-child(3) > ul"
+    dropdown_selector = conf["TOURNAMENTS_TABLE_HEADER"] + conf["DROPDOWN_SELECTOR_2"]
     dropdown_menu = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located(
             (By.CSS_SELECTOR,
@@ -145,20 +144,18 @@ def select_season(driver, year):
     """
     Selects specified year in dropdown menu on tournament webpage.
     """
-    seasons_button = "fromSeason"
     button_year = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable(
-            (By.ID, seasons_button))
+            (By.ID, conf["FROM_SEASON"]))
     )
     button_year.click()
 
     select = Select(button_year)
     select.select_by_value(year)
 
-    seasons_button = "toSeason"
     button_year = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable(
-            (By.ID, seasons_button))
+            (By.ID, conf["TO_SEASON"]))
     )
     button_year.click()
     select = Select(button_year)
@@ -167,7 +164,7 @@ def select_season(driver, year):
 
 def get_tournaments_info(driver, year='2023'):
     """
-    Retrieves table data on tournments for a specified year.
+    Retrieves table data on tournaments for a specified year.
     Returns list of the rows of the data.
     """
     try:
@@ -179,7 +176,7 @@ def get_tournaments_info(driver, year='2023'):
         time.sleep(2)
         table = driver.find_element(By.ID, 'tournamentsTable')
         time.sleep(2)
-        tournament_rows = table.find_elements(By.CSS_SELECTOR, 'tbody tr')
+        tournament_rows = table.find_elements(By.CSS_SELECTOR, conf["ROWS"])
         logger.info(f"Successfully fetched all rows from table.")
 
     except Exception as e:
@@ -197,7 +194,7 @@ def get_tournament_tabulated_data(rows):
     tournament_info = []
     for row in rows:
         try:
-            cells = row.find_elements(By.TAG_NAME, 'td')
+            cells = row.find_elements(By.TAG_NAME, conf["CELLS"])
             row_data = {
                 'name': cells[0].text,
                 'level': cells[1].text,
