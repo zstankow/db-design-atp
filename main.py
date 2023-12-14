@@ -79,9 +79,8 @@ def main():
         get_players_info()
         get_tournament_info()
 
-
     else:
-        print("Invalid command. Supported commands: tournaments, ranking")
+        print("Invalid command. Supported commands: tournaments, ranking, empty_db, create_db")
 
 
 if __name__ == "__main__":
