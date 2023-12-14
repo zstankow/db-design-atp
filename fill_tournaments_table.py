@@ -18,7 +18,6 @@ def get_tournament_info():
         insert_tournaments(tournaments_info)
 
 
-
 def insert_tournaments(tournaments_info):
     connection = pymysql.connect(
         host="localhost",
@@ -28,12 +27,13 @@ def insert_tournaments(tournaments_info):
     with connection.cursor() as cursor:
         for tournament_data in tournaments_info:
             # Extracting tournament data
-            name, level, surface, year,participation_perc, strength, avg_elo, winner = tournament_data
+            name, level, surface, year, participation_perc, strength, avg_elo, winner = tournament_data
 
             # Insert data into the tournaments table
             query_insert = "INSERT INTO tournaments (name, level, surface, year, participation_perc, strength, avg_elo, winner) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
             cursor.execute(query_insert,
-                           (name, level, surface, int(year), float(participation_perc[:-1]) / 100, int(strength), avg_elo, winner))
+                           (name, level, surface, int(year), float(participation_perc[:-1]) / 100, int(strength),
+                            avg_elo, winner))
             print("Row inserted successfully!")
     # Commit changes to the database
     connection.commit()
