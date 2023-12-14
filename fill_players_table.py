@@ -85,4 +85,3 @@ example_info = [['1', '1', 'Novak Djokovic', 'SRB', '-', '-'], ['2', '1', 'Roger
                 ['98', '64', 'Tobias Kamke', 'GER', '-', '-'], ['99', '79', 'Adrian Ungur', 'ROU', '-', '-'],
                 ['100', '14', 'Ivo Karlovic', 'CRO', '-', '-']]
 
-insert_players(example_info)

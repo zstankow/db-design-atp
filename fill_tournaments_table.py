@@ -103,6 +103,3 @@ def insert_tournaments(tournaments_info):
             print("Row inserted successfully!")
     # Commit changes to the database
     connection.commit()
-
-
-insert_tournaments(example_info)

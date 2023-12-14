@@ -4,16 +4,27 @@ from create_sql_file import create_sql_file
 import argparse
 from connect_to_mysql import connect_to_mysql
 
-from fill_players_table import get_players_info
-from fill_tournaments_table import get_tournament_info
+from fill_players_table import insert_players
+from fill_tournaments_table import insert_tournaments
 
 
 def execute_sql_file():
     connection, cursor = connect_to_mysql()
-    with open('tennis_database.sql', 'r') as file:
-        sql_commands = file.read()
-        cursor.execute(sql_commands)
+    try:
+        with open('tennis_database.sql', 'r') as file:
+            sql_commands = file.read()
+            # Split SQL commands by semicolon
+            commands = sql_commands.split(';')
+            for command in commands:
+                # Skip empty commands
+                if command.strip() != '':
+                    cursor.execute(command)
         connection.commit()
+        print("SQL file executed successfully!")
+    except Exception as e:
+        print("Error executing SQL file:", e)
+    finally:
+        connection.close()
 
 
 def main():
