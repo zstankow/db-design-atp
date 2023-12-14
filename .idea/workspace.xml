@@ -240,7 +240,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702571726055</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="update of sql db creation file">
+      <option name="closed" value="true" />
+      <created>1702573139658</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1702573139658</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
