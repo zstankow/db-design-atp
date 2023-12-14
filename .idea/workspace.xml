@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="format the file and add options to error message in CLI">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_collector.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_collector.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="update of sql db creation file">
+      <change beforePath="$PROJECT_DIR$/insert_finals.py" beforeDir="false" afterPath="$PROJECT_DIR$/insert_finals.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tennis_sql_schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/tennis_sql_schema.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,27 +53,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
-    <configuration name="create_empty_db" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="db-design-atp" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/create_empty_db.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="create_sql_file" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="db-design-atp" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -119,6 +95,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="insert_finals" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="db-design-atp" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insert_finals.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="db-design-atp" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -132,7 +129,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="create_db" />
+      <option name="PARAMETERS" value="empty_db" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -162,8 +159,8 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.insert_finals" />
       <item itemvalue="Python.fill_tournaments_table" />
-      <item itemvalue="Python.create_empty_db" />
       <item itemvalue="Python.create_sql_file" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python.tournaments" />
@@ -171,10 +168,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.insert_finals" />
         <item itemvalue="Python.tournaments" />
         <item itemvalue="Python.fill_tournaments_table" />
         <item itemvalue="Python.create_sql_file" />
-        <item itemvalue="Python.create_empty_db" />
       </list>
     </recent_temporary>
   </component>
@@ -227,7 +224,23 @@
       <option name="project" value="LOCAL" />
       <updated>1702561447306</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="update of sql db creation file">
+      <option name="closed" value="true" />
+      <created>1702571502786</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1702571502786</updated>
+    </task>
+    <task id="LOCAL-00007" summary="update of sql db creation file">
+      <option name="closed" value="true" />
+      <created>1702571726055</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1702571726055</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -237,6 +250,7 @@
     <MESSAGE value="delete useless line" />
     <MESSAGE value="fixed non existing db problem" />
     <MESSAGE value="format the file and add options to error message in CLI" />
-    <option name="LAST_COMMIT_MESSAGE" value="format the file and add options to error message in CLI" />
+    <MESSAGE value="update of sql db creation file" />
+    <option name="LAST_COMMIT_MESSAGE" value="update of sql db creation file" />
   </component>
 </project>

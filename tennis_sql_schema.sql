@@ -26,12 +26,13 @@
     -- Create finals table
     CREATE TABLE finals (
         id INTEGER AUTO_INCREMENT PRIMARY KEY,
+        date VARCHAR(255),
         tournament_id INTEGER
         tournament_name VARCHAR(255),
         winner VARCHAR(255),
         loser VARCHAR(255),
         game_result VARCHAR(255)
-        FOREIGN KEY (tournament_id) REFERENCES tournaments(id),
-        FOREIGN KEY (winner) REFERENCES players(name),
-        FOREIGN KEY (loser) REFERENCES players(name),
+        -- FOREIGN KEY (tournament_id) REFERENCES tournaments(id),
+        -- FOREIGN KEY (winner) REFERENCES players(name),
+        -- FOREIGN KEY (loser) REFERENCES players(name),
     );
