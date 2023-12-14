@@ -26,7 +26,7 @@ def add_players_info():
     Retrieves info on player rankings from the START year to the END year and inserts the data to the database.
     """
     for year in range(conf["START"], conf["END"], -1):
-        players_info = webscraper.run_rankings(conf["NUM"], str(year))
+        players_info = webscraper.scrape_rankings(conf["NUM"], str(year))
         insert_players(players_info)
         logger.info(f"Player ranking information of year {year} added to database.")
         print(f"Tournament information of year {year} added to database.")
@@ -62,7 +62,7 @@ def add_tournament_info():
     Retrieves info on tournaments from the START year to the END year and inserts the data to the database.
     """
     for year in range(conf['START'], conf['END'], -1):
-        tournaments_info = webscraper.run_tournaments(str(year))
+        tournaments_info = webscraper.scrape_tournaments(str(year))
         insert_tournaments(tournaments_info)
         logger.info(f"Tournament information of year {year} added to database.")
         print(f"Tournament information of year {year} added to database.")
