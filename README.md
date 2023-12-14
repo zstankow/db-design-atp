@@ -2,10 +2,11 @@
 ## __Tennis Tournaments and Player Rankings__
 
 This Python script retrieves ATP tennis player rankings from the 
-[Ultimate Tennis Statistics website](https://www.ultimatetennisstatistics.com/) and has two possible functionalities:
+[Ultimate Tennis Statistics website](https://www.ultimatetennisstatistics.com/) and has three possible functionalities:
 
 1. To run commands from the CLI that either webscrapes the tournaments or player rankings from a user-specified year (for player rankings, number of top players is also user-specified).
-2. To create a relational DB that contains player information and tournaments from the past 10 years (from 2013 and onwards). 
+2. To create an empty database with the different tables.
+3. To create a relational DB that contains player informations, tournaments, and finals of these tournaments from the past 10 years (from 2014 and onwards). 
 
 Initially, our approach involved using the `requests` and `BeautifulSoup` libraries to parse data from tables. However, we quickly realized that the target website employs dynamic content, prompting a switch to the more suitable `selenium` library.
 
