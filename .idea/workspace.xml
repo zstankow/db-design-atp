@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="commit useless files">
-      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/create_sql_file.py" beforeDir="false" afterPath="$PROJECT_DIR$/create_sql_file.py" afterDir="false" />
+    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="useless files">
       <change beforePath="$PROJECT_DIR$/fill_players_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/fill_players_table.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fill_tournaments_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/fill_tournaments_table.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tennis_database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/tennis_database.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,14 +40,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "nathan__fill__players",
-    "last_opened_file_path": "/Users/elliottazoulay/Desktop/NATHAN/ITC/db-design-atp"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;nathan__fill__players&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/elliottazoulay/Desktop/NATHAN/ITC/db-design-atp&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -169,6 +166,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="commit useless files" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit useless files" />
+    <MESSAGE value="useless files" />
+    <option name="LAST_COMMIT_MESSAGE" value="useless files" />
   </component>
 </project>
