@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="delete useless line">
-      <change beforePath="$PROJECT_DIR$/fill_players_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/fill_players_table.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fill_tournaments_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/fill_tournaments_table.py" afterDir="false" />
+    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="fixed non existing db problem">
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,14 +38,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;nathan__fill__players&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/elliottazoulay/Desktop/NATHAN/ITC/db-design-atp&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/elliottazoulay/Desktop/NATHAN/ITC/db-design-atp"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -129,7 +128,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="create_db" />
+      <option name="PARAMETERS" value="tournaments 2017" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -168,9 +167,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.tournaments" />
         <item itemvalue="Python.fill_tournaments_table" />
         <item itemvalue="Python.create_sql_file" />
-        <item itemvalue="Python.tournaments" />
         <item itemvalue="Python.create_empty_db" />
       </list>
     </recent_temporary>
@@ -208,7 +207,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702549022837</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fixed non existing db problem">
+      <option name="closed" value="true" />
+      <created>1702550275359</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1702550275359</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -216,6 +223,7 @@
     <MESSAGE value="all options work fine" />
     <MESSAGE value="useless files" />
     <MESSAGE value="delete useless line" />
-    <option name="LAST_COMMIT_MESSAGE" value="delete useless line" />
+    <MESSAGE value="fixed non existing db problem" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed non existing db problem" />
   </component>
 </project>
