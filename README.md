@@ -2,10 +2,11 @@
 ## __Tennis Tournaments and Player Rankings__
 
 This Python script retrieves ATP tennis player rankings from the 
-[Ultimate Tennis Statistics website](https://www.ultimatetennisstatistics.com/) and has two possible functionalities:
+[Ultimate Tennis Statistics website](https://www.ultimatetennisstatistics.com/) and has three possible functionalities:
 
 1. To run commands from the CLI that either webscrapes the tournaments or player rankings from a user-specified year (for player rankings, number of top players is also user-specified).
-2. To create a relational DB that contains player information and tournaments from the past 10 years (from 2013 and onwards). 
+2. To create an empty database with the different tables.
+3. To create a relational DB that contains player informations, tournaments, and finals of these tournaments from the past 10 years (from 2014 and onwards). 
 
 Initially, our approach involved using the `requests` and `BeautifulSoup` libraries to parse data from tables. However, we quickly realized that the target website employs dynamic content, prompting a switch to the more suitable `selenium` library.
 
@@ -47,15 +48,17 @@ By incorporating a brief `time.sleep(1)` pause, we ensure that the driver doesn'
 ## Usage
 1. Clone the repository or download the following scripts:
 - `main.py`
-- `tennis_rankings.py`
-- `head_2_head.py`
-- `logger.py`
+- `data_collector.py.py`
+- `data_collector.py`
+- `tennis_sql_schema.sql`
 
 2. Run the script in your cmd:
-    `python main.py`
+   1. to print ranking of a certain year :  python main.py ranking year number_of_players 
+   2. to print tournaments of a certain year : python main.py tournaments year
+   3. to create empty db : python main.py empty_db
+   4. to create a full db : python main.py create_db
    
-4. Follow the onscreen prompts. 
-5. The script will fetch the data from the Ultimate Tennis Statistics website and display the results.
+3. The script will fetch the data from the Ultimate Tennis Statistics website and display the results.
 
 ## Logging
 The script logs relevant information and errors to a file named `tennis.log`
