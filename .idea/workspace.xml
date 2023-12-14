@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="useless files">
-      <change beforePath="$PROJECT_DIR$/fill_players_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/fill_players_table.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fill_tournaments_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/fill_tournaments_table.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,10 +160,28 @@
       <option name="presentableId" value="Default" />
       <updated>1702377798731</updated>
     </task>
+    <task id="LOCAL-00001" summary="all options work fine">
+      <option name="closed" value="true" />
+      <created>1702548353128</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1702548353128</updated>
+    </task>
+    <task id="LOCAL-00002" summary="useless files">
+      <option name="closed" value="true" />
+      <created>1702548362454</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1702548362454</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="commit useless files" />
+    <MESSAGE value="all options work fine" />
     <MESSAGE value="useless files" />
     <option name="LAST_COMMIT_MESSAGE" value="useless files" />
   </component>

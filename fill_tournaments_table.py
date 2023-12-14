@@ -26,7 +26,6 @@ connection = pymysql.connect(
 
 
 def insert_tournaments(tournaments_info):
-    print(tournaments_info)
     with connection.cursor() as cursor:
         for tournament_data in tournaments_info:
             # Extracting tournament data
