@@ -1,34 +1,48 @@
-import rankings
-import tournaments
-from create_sql_file import create_sql_file
 import argparse
-from connect_to_mysql import connect_to_mysql
+import json
+from tennis_logger import logger
+from data_collector import add_players_info, add_tournament_info
+import webscraper
+import pymysql
 
-from fill_players_table import get_players_info
-from fill_tournaments_table import get_tournament_info
+# Load json file data
+with open('config.json', 'r') as file:
+    conf = json.load(file)
 
 
 def execute_sql_file():
-    connection, cursor = connect_to_mysql()
-    try:
-        with open('tennis_database.sql', 'r') as file:
-            sql_commands = file.read()
-            # Split SQL commands by semicolon
-            commands = sql_commands.split(';')
-            for command in commands:
-                # Skip empty commands
-                if command.strip() != '':
-                    cursor.execute(command)
-        connection.commit()
-        print("SQL file executed successfully!")
-    except Exception as e:
-        print("Error executing SQL file:", e)
-    finally:
-        connection.close()
+    """
+    Executes commands within .sql file.
+    Returns None
+    """
+    connection = pymysql.connect(
+        host="localhost",
+        user=conf["USER"],
+        password=conf["PASSWORD"]
+    )
+    with connection.cursor() as cursor:
+        try:
+            with open(conf["DB_COMMANDS_FILE"], 'r') as file:
+                sql_commands = file.read()
+                # Split SQL commands by semicolon
+                commands = sql_commands.split(';')
+                for command in commands:
+                    # Skip empty commands
+                    if command.strip() != '':
+                        cursor.execute(command)
+            connection.commit()
+            logger.info(f'Successfully executed {conf["DB_COMMANDS_FILE"]} file commands.')
+        except Exception as e:
+            logger.error(f'{e}: Error in executing {conf["DB_COMMANDS_FILE"]} file commands.')
+        finally:
+            connection.close()
 
 
-def main():
-    # Create ArgumentParser object
+def parse():
+    """
+    Parses arguments from command line.
+    Returns args.
+    """
     parser = argparse.ArgumentParser(description='User can type one of two arguments: [tournament year] \n'
                                                  'to webscrape data on tournaments from a specific year or \n'
                                                  '[ranking year number_of_players] \n'
@@ -52,36 +66,41 @@ def main():
     # Subparser for 'create_db' command
     subparsers.add_parser('create_db', help='Creates a mysql database "tennis" with filled tables')
     args = parser.parse_args()
+    return args
+
+
+def main():
+    args = parse()
+    logger.info(f'Args input: {args}')
 
     # Execute the command based on the provided arguments
     if args.command == 'tournaments':
         print(f"Executing 'tournaments' command for the year {args.year}")
         print("Loading...")
-        table = tournaments.run(args.year)
-        tournaments.print_data(table)
+        table = webscraper.run_tournaments(args.year)
+        webscraper.print_tournament_data(table)
 
     elif args.command == 'ranking':
         print(f"Executing 'ranking' command for the year {args.year} with {args.number_of_players} players")
         print("Loading...")
-        table = rankings.run(args.number_of_players, args.year)
-        rankings.print_data(table)
+        table = webscraper.run_rankings(args.number_of_players, args.year)
+        webscraper.print_ranking_data(table)
 
     elif args.command == 'empty_db':
         print(f"Creating empty database 'tennis'")
-        create_sql_file()
         execute_sql_file()
+        print(f"Database 'tennis' created.")
 
     elif args.command == 'create_db':
         print(f"Creating database 'tennis'")
-        print(f"This will take a few minutes...")
-        create_sql_file()
         execute_sql_file()
-        get_players_info()
-        get_tournament_info()
-
+        print(f"Database 'tennis' created.")
+        print(f"Collecting data... This will take a few minutes...")
+        add_players_info()
+        add_tournament_info()
 
     else:
-        print("Invalid command. Supported commands: tournaments, ranking")
+        print("Invalid command. Supported commands: tournaments, ranking, empty_db, create_db.")
 
 
 if __name__ == "__main__":

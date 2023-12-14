@@ -1,10 +1,16 @@
 {
+  "RANKING_URL": "https://www.ultimatetennisstatistics.com/rankingsTable",
+  "TOURNAMENTS_URL": "https://www.ultimatetennisstatistics.com/tournaments",
+  "TOURNAMENTS_TABLE_HEADER": "#tournamentsTable-header ",
+  "RANKING_TABLE_HEADER": "#rankingsTable-header ",
+  "DB_COMMANDS_FILE": "tennis_sql_schema.sql",
   "NAME": 2,
   "BEST_RANK": 1,
   "COUNTRY": 3,
-  "NUM": 200,
+  "NUM": "200",
   "START": 2023,
   "END": 2013,
   "USER": "root",
-  "PASSWORD": "root"
+  "PASSWORD": "Bagdad90",
+  "DATABASE": "tennis"
 }
