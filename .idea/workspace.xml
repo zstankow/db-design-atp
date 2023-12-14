@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="update of sql db creation file">
-      <change beforePath="$PROJECT_DIR$/insert_finals.py" beforeDir="false" afterPath="$PROJECT_DIR$/insert_finals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tennis_sql_schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/tennis_sql_schema.sql" afterDir="false" />
-    </list>
+    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="update of sql db creation file + get_tournament_id" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -129,7 +126,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="empty_db" />
+      <option name="PARAMETERS" value="create_db" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -248,7 +245,23 @@
       <option name="project" value="LOCAL" />
       <updated>1702573139658</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="update of sql db creation file + get_tournament_id">
+      <option name="closed" value="true" />
+      <created>1702574889185</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1702574889185</updated>
+    </task>
+    <task id="LOCAL-00010" summary="update of sql db creation file + get_tournament_id">
+      <option name="closed" value="true" />
+      <created>1702574893479</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1702574893479</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -259,6 +272,7 @@
     <MESSAGE value="fixed non existing db problem" />
     <MESSAGE value="format the file and add options to error message in CLI" />
     <MESSAGE value="update of sql db creation file" />
-    <option name="LAST_COMMIT_MESSAGE" value="update of sql db creation file" />
+    <MESSAGE value="update of sql db creation file + get_tournament_id" />
+    <option name="LAST_COMMIT_MESSAGE" value="update of sql db creation file + get_tournament_id" />
   </component>
 </project>
