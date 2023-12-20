@@ -4,9 +4,17 @@ USE tennis;
 
 -- Create players table
 CREATE TABLE players (
-    name VARCHAR(255) PRIMARY KEY,
+    player_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
     best_rank INTEGER,
-    country_id VARCHAR(255)
+    country_id INTEGER
+);
+    -- FOREIGN KEY (country_id) REFERENCES countries(country_id),
+
+-- Create countries table
+CREATE TABLE countries (
+    country_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255)
 );
 
 -- Create tournaments table

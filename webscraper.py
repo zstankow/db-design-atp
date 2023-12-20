@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from tabulate import tabulate
 import json
+import pandas as pd
+import numpy as np
 
 with open('config.json', 'r') as file:
     conf = json.load(file)
@@ -50,10 +52,10 @@ def select_year(driver, year='2023'):
     select.select_by_value(year)
 
 
-def get_players_info(driver, year='2023'):
+def get_players_info(driver, num="200", year='2023'):
     """
     Retrieves web-scraped data on player rankings for selected year.
-    Returns list of data
+    Returns dataframe of player ranking data
     """
     try:
         # Clicking button responsible for number of display results.
@@ -69,31 +71,31 @@ def get_players_info(driver, year='2023'):
         logger.error(f"{e}: Failed to fetch all rows.")
         driver.quit()
         return []
-    return player_rows
+    return get_tabulated_ranking_data(player_rows, num)
 
 
 def get_tabulated_ranking_data(player_rows, num):
     """
-    Receives list of web-scraped player ranking data and tabulates it into a list of lists.
-    Returns list of data
+    Receives list of web-scraped player ranking data and creates a dataframe called player_info.
+    Returns dataframe
     """
-    players_info = []
+    players_info = pd.DataFrame(columns=["Current Ranking", "Best Ranking", "Name",
+                                         "Country", "+/- Positions", "+/- Points"])
     for i, row in enumerate(player_rows):
         try:
             if i < int(num):
                 cells = row.find_elements(By.TAG_NAME, conf["CELLS"])
                 row_data = {
-                    'ranking': cells[0].text.split(" ")[0],
-                    'best rank': cells[1].text,
-                    'country': cells[2].text,
-                    'name': cells[3].text,
-                    '+/- position': cells[4].text,
-                    '+/- points': cells[5].text
+                    "Current Ranking": cells[0].text.split(" ")[0],
+                    "Best Ranking": cells[1].text,
+                    "Country": cells[2].text,
+                    "Name": cells[3].text,
+                    "+/- Positions": cells[4].text if cells[4].text != '-' else np.nan,
+                    "+/- Points": cells[5].text
                 }
-                players_info.append([row_data['ranking'], row_data['best rank'],
-                                    row_data['name'], row_data['country'],
-                                    row_data['+/- position'], row_data['+/- points']])
-                logger.info(f"Player {row_data['name']} added to list.")
+                row_data_df = pd.DataFrame([row_data])
+                players_info = pd.concat([players_info, row_data_df], ignore_index=True)
+                logger.info(f"Player {row_data['Name']} added to list.")
             else:
                 break
         except Exception as e:
@@ -187,28 +189,26 @@ def get_tournaments_info(driver, year='2023'):
 
 def get_tournament_tabulated_data(rows):
     """
-    Receives a list of rows from the tournament data and extracts the table values.
-    Returns a list of the extracted values
+    Receives a list of rows from the tournament data and creates a dataframe called tournament_info.
+    Returns a dataframe.
     """
-    tournament_info = []
+    tournament_info = pd.DataFrame(columns=["Name", "Level", "Surface", "Seasons", "Part", "Str.", "Elo.", "Winner"])
     for row in rows:
         try:
             cells = row.find_elements(By.TAG_NAME, conf["CELLS"])
             row_data = {
-                'name': cells[0].text,
-                'level': cells[1].text,
-                'surface': cells[2].text,
-                'seasons': cells[5].text,
-                'part': cells[7].text,
-                'str': cells[8].text,
-                'elo': cells[9].text,
-                'winner': " ".join(cells[10].text.split()[1:])
+                "Name": cells[0].text,
+                "Level": cells[1].text,
+                "Surface": cells[2].text,
+                "Seasons": cells[5].text,
+                "Part": cells[7].text,
+                "Str.": cells[8].text,
+                "Elo.": cells[9].text,
+                "Winner": " ".join(cells[10].text.split()[1:])
             }
-            tournament_info.append([row_data['name'], row_data['level'],
-                                    row_data['surface'], row_data['seasons'], row_data['part'],
-                                    row_data['str'], row_data['elo'], row_data['winner']
-                                    ])
-            logger.info(f"Tournament {row_data['name']} added to list.")
+            row_data_df = pd.DataFrame([row_data])
+            tournament_info = pd.concat([tournament_info, row_data_df], ignore_index=True)
+            logger.info(f"Tournament {row_data['Name']} added to list.")
         except Exception as e:
             logger.info(f"{e}: Failed to extract information on tournament.")
     return tournament_info
@@ -231,31 +231,27 @@ def call_driver(url):
 
 def print_tournament_data(tournament_info):
     """
-        Receives a list of lists of player ranking data and prints the data.
+    Receives a dataframe of tournament data and prints the data.
     """
-    print("\n", tabulate(tournament_info, headers=[
-        "Tournament Name", "Level", "Surface", "Season", "Part.", "Str.", "Elo.", "Winner"
-    ], tablefmt="pretty"))
+    print(tabulate(tournament_info, headers='keys', tablefmt='psql'))
 
 
 def print_ranking_data(players_info):
     """
-    Receives a list of lists of player ranking data and prints the data.
+    Receives a dataframe of player ranking data and prints the data.
     """
-    print("\n", tabulate(players_info, headers=[
-            "Current Ranking", "Best Ranking", "Name", "Country", "+/- Positions", "+/- Points"
-    ], tablefmt="pretty"))
+    print(tabulate(players_info, headers='keys', tablefmt='psql'))
 
 
 def scrape_tournaments(year='2023'):
     driver = call_driver(conf["TOURNAMENTS_URL"])
-    table = get_tournaments_info(driver, year)
+    df = get_tournaments_info(driver, year)
     driver.quit()
-    return table
+    return df
 
 
 def scrape_rankings(number_of_players="200", year='2023'):
     driver = call_driver(conf["RANKING_URL"])
-    table = get_tabulated_ranking_data(get_players_info(driver, year), number_of_players)
+    df = get_players_info(driver, number_of_players, year)
     driver.quit()
-    return table
+    return df
