@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="update of sql db creation file + get_tournament_id">
-      <change beforePath="$PROJECT_DIR$/data_collector.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_collector.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insert_finals.py" beforeDir="false" afterPath="$PROJECT_DIR$/insert_finals.py" afterDir="false" />
+    <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="updated schema sql file">
+      <change afterPath="$PROJECT_DIR$/insta_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tennis_sql_schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/tennis_sql_schema.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,41 +40,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/elliottazoulay/Desktop/NATHAN/ITC/db-design-atp&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/elliottazoulay/Desktop/NATHAN/ITC/db-design-atp",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
-    <configuration name="create_sql_file" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="db-design-atp" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/create_sql_file.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.insta_api">
     <configuration name="fill_tournaments_table" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="db-design-atp" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -116,6 +97,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="insta_api" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="db-design-atp" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insta_api.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="db-design-atp" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -129,7 +131,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="create_db" />
+      <option name="PARAMETERS" value="empty_db" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -159,19 +161,19 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.insta_api" />
       <item itemvalue="Python.insert_finals" />
       <item itemvalue="Python.fill_tournaments_table" />
-      <item itemvalue="Python.create_sql_file" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python.tournaments" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.insta_api" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.insert_finals" />
         <item itemvalue="Python.tournaments" />
         <item itemvalue="Python.fill_tournaments_table" />
-        <item itemvalue="Python.create_sql_file" />
       </list>
     </recent_temporary>
   </component>
@@ -272,7 +274,23 @@
       <option name="project" value="LOCAL" />
       <updated>1702580166318</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="players first then tournaments">
+      <option name="closed" value="true" />
+      <created>1703095658952</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1703095658952</updated>
+    </task>
+    <task id="LOCAL-00013" summary="updated schema sql file">
+      <option name="closed" value="true" />
+      <created>1703096070976</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1703096070976</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -284,6 +302,8 @@
     <MESSAGE value="format the file and add options to error message in CLI" />
     <MESSAGE value="update of sql db creation file" />
     <MESSAGE value="update of sql db creation file + get_tournament_id" />
-    <option name="LAST_COMMIT_MESSAGE" value="update of sql db creation file + get_tournament_id" />
+    <MESSAGE value="players first then tournaments" />
+    <MESSAGE value="updated schema sql file" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated schema sql file" />
   </component>
 </project>

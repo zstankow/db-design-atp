@@ -9,7 +9,7 @@ CREATE TABLE players (
     best_rank INTEGER,
     country_id INTEGER
 );
-    -- FOREIGN KEY (country_id) REFERENCES countries(country_id),
+
 
 -- Create countries table
 CREATE TABLE countries (
@@ -39,19 +39,21 @@ CREATE TABLE finals (
     game_result VARCHAR(255)
 );
 
+-- Create accounts table
 CREATE TABLE accounts (
-    player_id INTEGER
-    username VARCHAR(255)
-    followers INTEGER
-    following INTEGER
+    player_id INTEGER,
+    username VARCHAR(255),
+    followers INTEGER,
+    following INTEGER,
     total_posts INTEGER
 );
 
+-- Create posts table
 CREATE TABLE posts (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY
-    account_name VARCHAR(255)
-    text VARCHAR(255)
-    likes INTEGER
-    comments INTEGER
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    account_name VARCHAR(255),
+    text VARCHAR(255),
+    likes INTEGER,
+    comments INTEGER,
     url VARCHAR(255)
 );
