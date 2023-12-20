@@ -34,11 +34,24 @@ CREATE TABLE finals (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     date VARCHAR(255),
     tournament_id INTEGER,
-    tournament_name VARCHAR(255),
     winner VARCHAR(255),
     loser VARCHAR(255),
     game_result VARCHAR(255)
-    -- FOREIGN KEY (tournament_id) REFERENCES tournaments(id),
-    -- FOREIGN KEY (winner) REFERENCES players(name),
-    -- FOREIGN KEY (loser) REFERENCES players(name),
+);
+
+CREATE TABLE accounts (
+    player_id INTEGER
+    username VARCHAR(255)
+    followers INTEGER
+    following INTEGER
+    total_posts INTEGER
+);
+
+CREATE TABLE posts (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY
+    account_name VARCHAR(255)
+    text VARCHAR(255)
+    likes INTEGER
+    comments INTEGER
+    url VARCHAR(255)
 );
