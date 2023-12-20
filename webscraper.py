@@ -123,7 +123,6 @@ def select_checkboxes(driver):
              checkbox_button))
     )
     button.click()
-
     dropdown_selector = conf["TOURNAMENTS_TABLE_HEADER"] + conf["DROPDOWN_SELECTOR_2"]
     dropdown_menu = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located(
