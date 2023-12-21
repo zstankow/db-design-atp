@@ -1,5 +1,6 @@
 from tennis_logger import logger
 import time
+from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.common.by import By
@@ -8,16 +9,17 @@ from tabulate import tabulate
 import json
 import pandas as pd
 import numpy as np
+import re
 
 with open('config.json', 'r') as file:
     conf = json.load(file)
 
 
-def select_num_display_results(driver, header, num):
+def select_num_display_results(driver, header, tail_button, tail_dropdown, num):
     """
     Changes number of display results from default value to num
     """
-    button_selector = header + conf["NUM_DISPLAY_BUTTON"]
+    button_selector = header + tail_button
     button = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable(
             (By.CSS_SELECTOR,
@@ -25,7 +27,7 @@ def select_num_display_results(driver, header, num):
     )
     button.click()
 
-    dropdown_selector = header + conf["DROPDOWN_SELECTOR_1"]
+    dropdown_selector = header + tail_dropdown
     dropdown_menu = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located(
             (By.CSS_SELECTOR,
@@ -59,7 +61,9 @@ def get_players_info(driver, num="200", year='2023'):
     """
     try:
         # Clicking button responsible for number of display results.
-        select_num_display_results(driver, conf["RANKING_TABLE_HEADER"], "All")
+        select_num_display_results(driver, header=conf["RANKING_TABLE_HEADER"],
+                                   tail_button=conf["NUM_DISPLAY_BUTTON"], tail_dropdown=conf["NUM_DISPLAY_DROPDOWN"],
+                                   num="All")
         select_year(driver, year)
 
         # Extracts table
@@ -114,31 +118,28 @@ def click_all_checkboxes(dropdown, option):
         option_display.click()
 
 
-def select_checkboxes(driver):
+def select_checkboxes(driver, header, tail_button, tail_dropdown, checkbox_list):
     """
     Selects all checkboxes on tournament webpage to ensure all columns are collected from table.
     """
-    checkbox_button = conf["TOURNAMENTS_TABLE_HEADER"] + conf["CHECKBOX_BUTTON"]
+    checkbox_button = header + tail_button
     button = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located(
             (By.CSS_SELECTOR,
              checkbox_button))
     )
     button.click()
-    dropdown_selector = conf["TOURNAMENTS_TABLE_HEADER"] + conf["DROPDOWN_SELECTOR_2"]
+    dropdown_selector = header + tail_dropdown
     dropdown_menu = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located(
             (By.CSS_SELECTOR,
              dropdown_selector))
     )
 
-    checkbox_list_str = ["name", "levels", "surfaces", "speeds",
-                         "eventCount", "seasons", "playerCount", "participation",
-                         "strength", "averageEloRating", "topPlayers"]
-
-    for box in checkbox_list_str:
+    for box in checkbox_list:
         option = f'input[name="{box}"]'
         click_all_checkboxes(dropdown_menu, option)
+        time.sleep(1)
 
 
 def select_season(driver, year):
@@ -163,15 +164,110 @@ def select_season(driver, year):
     select.select_by_value(year)
 
 
+def get_events_urls(rows):
+    """
+    Receives rows of a table containing html with links.
+    Returns the links extracted from the html.
+    """
+    urls = []
+    for row in rows:
+        anchor = WebDriverWait(row, 10).until(EC.presence_of_element_located((By.TAG_NAME, 'a')))
+        urls.append(anchor.get_attribute('href'))
+    return urls
+
+
+def get_events_info(driver, year='2014'):
+    """
+    Retrieves table data on events from years 2023 to 2014.
+    Returns list of the rows of the data.
+    """
+    # Change number of display results to "All", tournament season to 2014
+    select_num_display_results(driver, header=conf["TOURNAMENTS_TABLE_HEADER"],
+                               tail_button=conf["NUM_DISPLAY_BUTTON"], tail_dropdown=conf["NUM_DISPLAY_DROPDOWN"],
+                               num="All")
+    select_season(driver, year)
+    time.sleep(2)
+    table_rows = driver.find_elements(By.CSS_SELECTOR, conf["ROWS"])
+    events_urls = get_events_urls(table_rows)
+    driver.quit()
+
+    event_df = pd.DataFrame(columns=["Date", "Name", "Winner", "Finalist", "Score"])
+    for url in events_urls:
+        try:
+            driver = call_driver(url)
+            driver.execute_script("window.scrollTo(0, 400)")
+            select_num_display_results(driver, conf["EVENTS_TABLE_HEADER"], conf["EVENTS_NUM_DISPLAY_BUTTON"],
+                                       conf["EVENTS_NUM_DISPLAY_DROPDOWN"], "All")
+            checkbox_list_str = conf["CHECK_BOX_LIST_EVENTS"]
+            select_checkboxes(driver, conf["EVENTS_TABLE_HEADER"], conf["EVENTS_CHECKBOX_BUTTON"],
+                              conf["EVENTS_CHECKBOX_DROPDOWN"], checkbox_list_str)
+            time.sleep(2)
+            table = driver.find_element(By.ID, 'tournamentEventsTable')
+            time.sleep(2)
+            event_rows = table.find_elements(By.CSS_SELECTOR, conf["ROWS"])
+            event_info = get_event_tabulated_data(event_rows)
+            logger.info(f"Successfully fetched all rows from table at url {url}.")
+            event_df = pd.concat([event_df, event_info], ignore_index=True)
+            logger.info(f"Added event information at {url} to the dataframe event_df.")
+            driver.quit()
+
+        except Exception as e:
+            logger.info(f"Unable to extract events at {url}.")
+            driver.quit()
+            return pd.DataFrame()
+    return event_df
+
+
+def is_date_after(date, year=2014):
+    if date.year >= year:
+        return True
+    return False
+
+
+def get_event_tabulated_data(rows):
+    """
+    Receives a list of rows from the event data and creates a dataframe called event_info.
+    Returns a dataframe.
+    """
+    event_info = pd.DataFrame(columns=["Date", "Name", "Winner", "Finalist", "Score"])
+    for row in rows:
+        try:
+            cells = row.find_elements(By.TAG_NAME, conf["CELLS"])
+            pattern = re.compile(r'(\w+\s\w+)\s\(\d+\) d\. (\w+\s\w+)\s\(\d+\) (.+)$')
+            text = cells[9].text
+            match = pattern.match(text)
+            row_data = {
+                "Date": datetime.strptime(cells[0].text, '%d-%m-%Y'),
+                "Name": cells[1].text,
+                "Winner": match.group(1),
+                "Finalist": match.group(2),
+                "Score": match.group(3),
+            }
+            is_after = is_date_after(row_data["Date"])
+            if is_after:
+                row_data_df = pd.DataFrame([row_data])
+                event_info = pd.concat([event_info, row_data_df], ignore_index=True)
+                logger.info(f"Event {row_data['Name']} added to list.")
+            else:
+                return event_info
+        except Exception as e:
+            logger.info(f"{e}: Failed to extract information on event.")
+    return event_info
+
+
 def get_tournaments_info(driver, year='2023'):
     """
     Retrieves table data on tournaments for a specified year.
     Returns list of the rows of the data.
     """
     try:
-        select_num_display_results(driver, header=conf["TOURNAMENTS_TABLE_HEADER"], num="All")
+        select_num_display_results(driver, header=conf["TOURNAMENTS_TABLE_HEADER"],
+                                   tail_button=conf["NUM_DISPLAY_BUTTON"], tail_dropdown=conf["NUM_DISPLAY_DROPDOWN"],
+                                   num="All")
         select_season(driver, year)
-        select_checkboxes(driver)
+        checkbox_list_str = conf["CHECK_BOX_LIST_TOURNAMENTS"]
+        select_checkboxes(driver, header=conf["TOURNAMENTS_TABLE_HEADER"], tail_button=conf["CHECKBOX_BUTTON"],
+                          tail_dropdown=conf["CHECKBOX_DROPDOWN"], checkbox_list=checkbox_list_str)
 
         # Extracts table
         time.sleep(2)
@@ -229,18 +325,11 @@ def call_driver(url):
     return driver
 
 
-def print_tournament_data(tournament_info):
+def print_data(data):
     """
     Receives a dataframe of tournament data and prints the data.
     """
-    print(tabulate(tournament_info, headers='keys', tablefmt='psql'))
-
-
-def print_ranking_data(players_info):
-    """
-    Receives a dataframe of player ranking data and prints the data.
-    """
-    print(tabulate(players_info, headers='keys', tablefmt='psql'))
+    print(tabulate(data, headers='keys', tablefmt='psql'))
 
 
 def scrape_tournaments(year='2023'):
@@ -255,3 +344,9 @@ def scrape_rankings(number_of_players="200", year='2023'):
     df = get_players_info(driver, number_of_players, year)
     driver.quit()
     return df
+
+
+def scrape_events(year='2014'):
+    driver = call_driver(conf["TOURNAMENTS_URL"])
+    get_events_info(driver, year)
+    driver.quit()

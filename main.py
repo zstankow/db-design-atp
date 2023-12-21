@@ -78,13 +78,13 @@ def main():
         print(f"Executing 'tournaments' command for the year {args.year}")
         print("Loading...")
         table = webscraper.scrape_tournaments(args.year)
-        webscraper.print_tournament_data(table)
+        webscraper.print_data(table)
 
     elif args.command == 'ranking':
         print(f"Executing 'ranking' command for the year {args.year} with {args.number_of_players} players")
         print("Loading...")
         table = webscraper.scrape_rankings(args.number_of_players, args.year)
-        webscraper.print_ranking_data(table)
+        webscraper.print_data(table)
 
     elif args.command == 'empty_db':
         print(f"Creating empty database 'tennis'")
