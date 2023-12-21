@@ -27,7 +27,7 @@ def connect_to_instagram(username, password):
     return client
 
 
-def insert_account_info(user, cursor, username):
+def insert_account_infos(user, cursor, username):
     follower_count = user.follower_count
     following_count = user.following_count
     posts_count = user.media_count
@@ -40,7 +40,7 @@ def insert_account_info(user, cursor, username):
     cursor.execute(update_query, update_values)
 
 
-def insert_posts_info(client, user, cursor, username):
+def insert_posts_infos(client, user, cursor, username):
     last_10_posts = client.user_medias(user.pk, 10)
     for post in last_10_posts:
         like_counts = post.like_count
@@ -61,8 +61,8 @@ def insert_posts_info(client, user, cursor, username):
 
 def insert_insta_info_to_table(client, username, cursor):
     user = client.user_info_by_username(username)
-    insert_account_info(user, cursor, username)
-    insert_posts_info(client, user, cursor, username)
+    insert_account_infos(user, cursor, username)
+    insert_posts_infos(client, user, cursor, username)
     connection.commit()
 
 
