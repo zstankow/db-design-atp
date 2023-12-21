@@ -8,6 +8,7 @@ CREATE TABLE players (
     name VARCHAR(255),
     best_rank INTEGER,
     country_id INTEGER
+    -- FOREIGN KEY (country_id) REFERENCES countries(country_id)
 );
 
 
@@ -19,7 +20,7 @@ CREATE TABLE countries (
 
 -- Create tournaments table
 CREATE TABLE tournaments (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    tournament_id INTEGER AUTO_INCREMENT PRIMARY KEY,
     year INTEGER,
     name VARCHAR(255),
     level VARCHAR(255),
@@ -29,31 +30,29 @@ CREATE TABLE tournaments (
     avg_elo INTEGER
 );
 
--- Create finals table
-CREATE TABLE finals (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    date VARCHAR(255),
+-- Create events table
+CREATE TABLE events (
+    event_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    date DATE,
     tournament_id INTEGER,
-    winner VARCHAR(255),
-    loser VARCHAR(255),
+    winner_id INTEGER,
+    finalist_id INTEGER,
     game_result VARCHAR(255)
-);
-
--- Create accounts table
-CREATE TABLE accounts (
-    player_id INTEGER,
-    username VARCHAR(255),
-    followers INTEGER,
-    following INTEGER,
-    total_posts INTEGER
+    -- FOREIGN KEY (tournament_id) REFERENCES tournaments(tournament_id),
+    -- FOREIGN KEY (winner_id) REFERENCES players(player_id),
+    -- FOREIGN KEY (finalist_id) REFERENCES players(player_id),
 );
 
 -- Create posts table
 CREATE TABLE posts (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    post_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    player_id INTEGER,
     account_name VARCHAR(255),
-    text VARCHAR(255),
+    test VARCHAR(255),
     likes INTEGER,
     comments INTEGER,
     url VARCHAR(255)
+    -- FOREIGN KEY (player_id) REFERENCE players(player_id)
 );
+
