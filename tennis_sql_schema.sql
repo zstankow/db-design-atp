@@ -11,7 +11,6 @@ CREATE TABLE players (
     -- FOREIGN KEY (country_id) REFERENCES countries(country_id)
 );
 
-
 -- Create countries table
 CREATE TABLE countries (
     country_id INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -42,6 +41,18 @@ CREATE TABLE events (
     -- FOREIGN KEY (tournament_id) REFERENCES tournaments(tournament_id),
     -- FOREIGN KEY (winner_id) REFERENCES players(player_id),
     -- FOREIGN KEY (finalist_id) REFERENCES players(player_id),
+);
+
+-- Create posts table
+CREATE TABLE posts (
+    post_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    player_id INTEGER,
+    account_name VARCHAR(255),
+    test VARCHAR(255),
+    likes INTEGER,
+    comments INTEGER,
+    url VARCHAR(255)
+    -- FOREIGN KEY (player_id) REFERENCE players(player_id)
 );
 
 -- Create posts table

@@ -68,3 +68,6 @@ def insert_insta_info_to_table(client, username, cursor):
 
 for user in target_usernames:
     insert_insta_info_to_table(client, user, cursor)
+
+def add_posts_info():
+    pass

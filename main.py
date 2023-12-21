@@ -1,4 +1,13 @@
+<<<<<<< HEAD
 from instagrapi import Client
+=======
+import argparse
+import json
+from tennis_logger import logger
+from data_collector import add_players_info, add_tournament_info, add_events_info
+from insta_api import add_posts_info
+import webscraper
+>>>>>>> c8804a6661b70329fc53200183ee35b5a2aabfa1
 import pymysql
 
 # Connect to MySQL
@@ -56,7 +65,34 @@ def insert_posts_infos(client, user, cursor, username):
         insert_values = (username, caption_text, like_counts, comment_count, url)
         cursor.execute(insert_query, insert_values)
 
+<<<<<<< HEAD
     connection.commit()
+=======
+    elif args.command == 'ranking':
+        print(f"Executing 'ranking' command for the year {args.year} with {args.number_of_players} players")
+        print("Loading...")
+        table = webscraper.scrape_rankings(args.number_of_players, args.year)
+        webscraper.print_ranking_data(table)
+
+    elif args.command == 'empty_db':
+        print(f"Creating empty database 'tennis'")
+        execute_sql_file()
+        print(f"Database 'tennis' created.")
+
+    elif args.command == 'create_db':
+        print(f"Creating database 'tennis'")
+        execute_sql_file()
+        print(f"Database 'tennis' created.")
+        print(f"Collecting data... This will take a several minutes...")
+        add_players_info()
+        add_tournament_info()
+        add_events_info()
+        add_posts_info()
+
+
+    else:
+        print("Invalid command. Supported commands: tournaments, ranking, empty_db, create_db.")
+>>>>>>> c8804a6661b70329fc53200183ee35b5a2aabfa1
 
 
 def insert_insta_info_to_table(client, username, cursor):
