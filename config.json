@@ -24,13 +24,15 @@
                              "eventCount", "seasons", "playerCount", "participation",
                              "strength", "averageEloRating", "topPlayers"],
   "DB_COMMANDS_FILE": "tennis_sql_schema.sql",
+  "INSTA_API_USER": "nathanszpilman",
+  "INSTA_API_PASSWORD": "azeqsd",
   "NAME": 2,
   "BEST_RANK": 1,
   "COUNTRY": 3,
   "NUM": "200",
   "START": 2023,
   "END": 2013,
-  "USER": "root",
-  "PASSWORD": "Bagdad90",
+  "MYSQL_USER": "root",
+  "MYSQL_PASSWORD": "Bagdad90",
   "DATABASE": "tennis"
 }

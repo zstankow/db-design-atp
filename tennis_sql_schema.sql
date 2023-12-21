@@ -44,12 +44,14 @@ CREATE TABLE events (
     -- FOREIGN KEY (finalist_id) REFERENCES players(player_id),
 );
 
--- Create accounts table
-CREATE TABLE accounts (
-    account_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+-- Create posts table
+CREATE TABLE posts (
+    post_id INTEGER AUTO_INCREMENT PRIMARY KEY,
     player_id INTEGER,
-    user_name VARCHAR(255),
-    followers INTEGER,
-    following INTEGER
+    account_name VARCHAR(255),
+    test VARCHAR(255),
+    likes INTEGER,
+    comments INTEGER,
+    url VARCHAR(255)
     -- FOREIGN KEY (player_id) REFERENCE players(player_id)
 );
