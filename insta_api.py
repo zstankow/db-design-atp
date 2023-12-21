@@ -39,7 +39,7 @@ def insert_posts_infos(client, user, cursor, username):
     for post in last_10_posts:
         like_counts = post.like_count
         comment_count = post.comment_count
-        caption_text = post.caption_text[0:50]
+        caption_text = post.caption_text[0:20]
         url = "https://www.instagram.com/p/" + post.code
 
         # SQL INSERT query to add a new row for each post into the 'posts' table
