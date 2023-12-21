@@ -1,7 +1,8 @@
 import argparse
 import json
 from tennis_logger import logger
-from data_collector import add_players_info, add_tournament_info
+from data_collector import add_players_info, add_tournament_info, add_events_info
+from insta_api import add_posts_info
 import webscraper
 import pymysql
 
@@ -95,9 +96,11 @@ def main():
         print(f"Creating database 'tennis'")
         execute_sql_file()
         print(f"Database 'tennis' created.")
-        print(f"Collecting data... This will take a few minutes...")
+        print(f"Collecting data... This will take a several minutes...")
         add_players_info()
         add_tournament_info()
+        add_events_info()
+        add_posts_info()
 
 
     else:
