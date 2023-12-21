@@ -19,7 +19,7 @@ CREATE TABLE countries (
 
 -- Create tournaments table
 CREATE TABLE tournaments (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    tournament_id INTEGER AUTO_INCREMENT PRIMARY KEY,
     year INTEGER,
     name VARCHAR(255),
     level VARCHAR(255),
