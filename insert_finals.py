@@ -32,7 +32,7 @@ def get_tournament_id(cursor, tournament_name, year):
     return row[0] if row else None
 
 
-def insert_tournaments(finals_info):
+def insert_finals(finals_info):
     """
     Inserts finals data into the database.
     """
@@ -61,4 +61,4 @@ def insert_tournaments(finals_info):
 final_info = [["16-01-2023", "Australian Open", "Novak Djokovic", "Stefanos Tsitsipas", "6-3 7-6(4) 7-6(5)"],
               ["17-01-2023", "Roland Garros", "Novak Djokovic", "Alcaraz", "6-3 7-6(4) 7-6(5)"]]
 
-insert_tournaments(final_info)
+insert_finals(final_info)
