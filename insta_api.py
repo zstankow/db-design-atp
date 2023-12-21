@@ -21,6 +21,12 @@ client.login(username, password)
 target_usernames = ["djokernole", "k1ngkyrg1os"]
 
 
+def connect_to_instagram(username, password):
+    client = Client()
+    client.login(username, password)
+    return client
+
+
 def insert_account_infos(user, cursor, username):
     follower_count = user.follower_count
     following_count = user.following_count
