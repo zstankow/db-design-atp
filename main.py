@@ -1,84 +1,88 @@
-<<<<<<< HEAD
-from instagrapi import Client
-=======
 import argparse
 import json
 from tennis_logger import logger
 from data_collector import add_players_info, add_tournament_info, add_events_info
 from insta_api import add_posts_info
 import webscraper
->>>>>>> c8804a6661b70329fc53200183ee35b5a2aabfa1
 import pymysql
 
-# Connect to MySQL
-connection = pymysql.connect(
-    host='localhost',
-    user='root',
-    password='root',
-    database='tennis'
-)
-
-# Create a cursor
-cursor = connection.cursor()
-
-username = "nathanszpilman"
-password = "azeqsd"
-
-client = Client()
-client.login(username, password)
-
-target_usernames = ["djokernole", "k1ngkyrg1os"]
+# Load json file data
+with open('config.json', 'r') as file:
+    conf = json.load(file)
 
 
-def connect_to_instagram(username, password):
-    client = Client()
-    client.login(username, password)
-    return client
+def execute_sql_file():
+    """
+    Executes commands within .sql file.
+    Returns None
+    """
+    connection = pymysql.connect(
+        host="localhost",
+        user=conf["USER"],
+        password=conf["PASSWORD"]
+    )
+    with connection.cursor() as cursor:
+        try:
+            with open(conf["DB_COMMANDS_FILE"], 'r') as file:
+                sql_commands = file.read()
+                # Split SQL commands by semicolon
+                commands = sql_commands.split(';')
+                for command in commands:
+                    # Skip empty commands
+                    if command.strip() != '':
+                        cursor.execute(command)
+            connection.commit()
+            logger.info(f'Successfully executed {conf["DB_COMMANDS_FILE"]} file commands.')
+        except Exception as e:
+            logger.error(f'{e}: Error in executing {conf["DB_COMMANDS_FILE"]} file commands.')
+        finally:
+            connection.close()
 
 
-def insert_account_infos(user, cursor, username):
-    follower_count = user.follower_count
-    following_count = user.following_count
-    posts_count = user.media_count
-    update_query = """
-                UPDATE accounts
-                SET followers = %s, following = %s, total_posts = %s
-                WHERE username = %s
-                """
-    update_values = (follower_count, following_count, posts_count, username)
-    cursor.execute(update_query, update_values)
+def parse():
+    """
+    Parses arguments from command line.
+    Returns args.
+    """
+    parser = argparse.ArgumentParser(description='User can type one of two arguments: [tournament year] \n'
+                                                 'to webscrape data on tournaments from a specific year or \n'
+                                                 '[ranking year number_of_players] \n'
+                                                 ' to show the x ranked top players from a specific year')
+    # Add command-line arguments
+    subparsers = parser.add_subparsers(dest='command', help='Command to execute')
+    # Subparser for 'tournaments' command
+    parser_tournaments = subparsers.add_parser('tournaments', help='Prints all tournaments from a specified year')
+    parser_tournaments.add_argument('year', type=str, default='2023', help='Year of the tournaments')
+    # Subparser for 'ranking' command
+    parser_ranking = subparsers.add_parser('ranking', help='Prints ranking of top x players from a specified year')
+    parser_ranking.add_argument('year', type=str, help='Year of the ranking')
+    parser_ranking.add_argument('number_of_players', type=str, help='Number of players for the ranking')
+    # Subparser for 'empty_db' command
+    subparsers.add_parser('empty_db', help='Creates a mysql database "tennis" with empty tables')
+    # Subparser for 'create_db' command
+    subparsers.add_parser('create_db', help='Creates a mysql database "tennis" with filled tables')
+    args = parser.parse_args()
+    return args
 
 
-def insert_posts_infos(client, user, cursor, username):
-    last_10_posts = client.user_medias(user.pk, 10)
-    for post in last_10_posts:
-        like_counts = post.like_count
-        comment_count = post.comment_count
-        caption_text = post.caption_text[0:20]
-        url = "https://www.instagram.com/p/" + post.code
-
-        # SQL INSERT query to add a new row for each post into the 'posts' table
-        insert_query = """
-            INSERT INTO posts (account_name, text, likes, comments, url)
-            VALUES (%s, %s, %s, %s, %s)
-            """
-        insert_values = (username, caption_text, like_counts, comment_count, url)
-        cursor.execute(insert_query, insert_values)
-
-<<<<<<< HEAD
-    connection.commit()
-=======
+def main():
+    args = parse()
+    logger.info(f'Args input: {args}')
+    # Execute the command based on the provided arguments
+    if args.command == 'tournaments':
+        print(f"Executing 'tournaments' command for the year {args.year}")
+        print("Loading...")
+        table = webscraper.scrape_tournaments(args.year)
+        webscraper.print_data(table)
     elif args.command == 'ranking':
         print(f"Executing 'ranking' command for the year {args.year} with {args.number_of_players} players")
         print("Loading...")
         table = webscraper.scrape_rankings(args.number_of_players, args.year)
-        webscraper.print_ranking_data(table)
-
+        webscraper.print_data(table)
     elif args.command == 'empty_db':
         print(f"Creating empty database 'tennis'")
         execute_sql_file()
         print(f"Database 'tennis' created.")
-
     elif args.command == 'create_db':
         print(f"Creating database 'tennis'")
         execute_sql_file()
@@ -88,19 +92,9 @@ def insert_posts_infos(client, user, cursor, username):
         add_tournament_info()
         add_events_info()
         add_posts_info()
-
-
     else:
         print("Invalid command. Supported commands: tournaments, ranking, empty_db, create_db.")
->>>>>>> c8804a6661b70329fc53200183ee35b5a2aabfa1
 
 
-def insert_insta_info_to_table(client, username, cursor):
-    user = client.user_info_by_username(username)
-    insert_account_infos(user, cursor, username)
-    insert_posts_infos(client, user, cursor, username)
-    connection.commit()
-
-
-for user in target_usernames:
-    insert_insta_info_to_table(client, user, cursor)
+if __name__ == "__main__":
+    main()
