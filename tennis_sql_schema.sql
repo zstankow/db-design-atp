@@ -54,15 +54,3 @@ CREATE TABLE posts (
     url VARCHAR(255)
     -- FOREIGN KEY (player_id) REFERENCE players(player_id)
 );
-
--- Create posts table
-CREATE TABLE posts (
-    post_id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    player_id INTEGER,
-    account_name VARCHAR(255),
-    test VARCHAR(255),
-    likes INTEGER,
-    comments INTEGER,
-    url VARCHAR(255)
-    -- FOREIGN KEY (player_id) REFERENCE players(player_id)
-);
