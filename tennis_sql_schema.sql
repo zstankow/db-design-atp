@@ -46,11 +46,17 @@ CREATE TABLE events (
 -- Create posts table
 CREATE TABLE posts (
     post_id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    player_id INTEGER,
-    account_name VARCHAR(255),
+    account_id INTEGER,
     test VARCHAR(255),
     likes INTEGER,
     comments INTEGER,
     url VARCHAR(255)
-    -- FOREIGN KEY (player_id) REFERENCE players(player_id)
+    -- FOREIGN KEY (account_id) REFERENCE accounts(account_id)
 );
+
+-- Create accounts table
+CREATE TABLE accounts (
+    account_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    player_id INTEGER
+    -- FOREIGN KEY (player_id) REFERENCE players(player_id)
