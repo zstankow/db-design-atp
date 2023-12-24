@@ -33,7 +33,7 @@
   "START": 2023,
   "END": 2013,
   "MYSQL_USER": "root",
-  "MYSQL_PASSWORD": "Bagdad90",
+  "MYSQL_PASSWORD": "root",
   "DATABASE": "tennis",
   "USERNAME_INDEX": 0,
   "ACCOUNT_ID_INDEX": 0,
