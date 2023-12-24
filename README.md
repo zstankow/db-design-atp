@@ -9,14 +9,16 @@ Be it latest or historical results, in-match statistics, records or all-time gre
 - Tournaments
 - Players
 - Events
+- Accounts
 - Posts
 
 All the information is gathered to better understand the stats of the top players and most recent events.
 
 ## Objectives:
 
-- To successfully scrape relevant data from the website.
+- To successfully scrape relevant data from the Ultimate Tennis Statistics website.
 - Create a large DB of information about tennis players and past events.
+- Collect instagram account usernames and posts from ranked players.
 
 ## Methods and Used Libraries:
 
@@ -24,15 +26,18 @@ The code is divided into a few main stages:
 1. parse the user arguments and filters using `argparse` library.
 2. Create the DB "tennis".
 3. Aquiring the data within the website's tables by webscraping using `selenium`.
-4. Inserting the data into the DB created in stage two.
+4. Aquiring data from Instagram using `instagrapi`
+5. Inserting the data into the DB created in stage two.
 
 ## User Arguments:
 
 Four possible arguments are available:
-- create_db - scrapes all the relevant data from the years 2014 and onwards
-- empty_db - creates empty DB tennis with the relevant tables
 - ranking - prints the top x players from the year y
 - tournaments - prints all the tournaments from the year y
+- empty_db - creates empty DB tennis with the relevant tables
+- create_db - scrapes all the relevant data from the years 2014 and onwards
+- fill_insta - scrapes instagram account data from ranked players
+
 
 For example:
 ```
@@ -47,9 +52,9 @@ will print the top 73 players from the year 2014
 - __pymysql__
   
     `pip install pymysql`
-- __json__
+- __instagrapi__
 
-    `pip install json`
+    `pip install instagrapi`
 
 - __WebDriver__: make sure you have the Chrome WebDriver executable installed and available
   in your system path. Ensure that the version is compatible with you chrome browser. You can download the driver [here](https://chromedriver.chromium.org/downloads).
