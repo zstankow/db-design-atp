@@ -26,6 +26,7 @@ def select_num_display_results(driver, header, tail_button, tail_dropdown, num):
              button_selector))
     )
     button.click()
+    time.sleep(0.2)
 
     dropdown_selector = header + tail_dropdown
     dropdown_menu = WebDriverWait(driver, 10).until(
@@ -33,6 +34,7 @@ def select_num_display_results(driver, header, tail_button, tail_dropdown, num):
             (By.CSS_SELECTOR,
              dropdown_selector))
     )
+    time.sleep(0.2)
 
     option_display = WebDriverWait(dropdown_menu, 10).until(
         EC.element_to_be_clickable((By.LINK_TEXT, num))
@@ -129,6 +131,7 @@ def select_checkboxes(driver, header, tail_button, tail_dropdown, checkbox_list)
              checkbox_button))
     )
     button.click()
+    time.sleep(0.5)
     dropdown_selector = header + tail_dropdown
     dropdown_menu = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located(
@@ -139,7 +142,7 @@ def select_checkboxes(driver, header, tail_button, tail_dropdown, checkbox_list)
     for box in checkbox_list:
         option = f'input[name="{box}"]'
         click_all_checkboxes(dropdown_menu, option)
-        time.sleep(1)
+        time.sleep(0.5)
 
 
 def select_season(driver, year):
@@ -154,12 +157,14 @@ def select_season(driver, year):
 
     select = Select(button_year)
     select.select_by_value(year)
+    time.sleep(0.5)
 
     button_year = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable(
             (By.ID, conf["TO_SEASON"]))
     )
     button_year.click()
+    time.sleep(0.5)
     select = Select(button_year)
     select.select_by_value(year)
 
@@ -182,9 +187,9 @@ def get_events_info(driver, year='2014'):
     Returns list of the rows of the data.
     """
     # Change number of display results to "All", tournament season to 2014
-    select_num_display_results(driver, header=conf["TOURNAMENTS_TABLE_HEADER"],
-                               tail_button=conf["NUM_DISPLAY_BUTTON"], tail_dropdown=conf["NUM_DISPLAY_DROPDOWN"],
-                               num="All")
+    select_num_display_results(driver, conf["TOURNAMENTS_TABLE_HEADER"],
+                               conf["NUM_DISPLAY_BUTTON"], conf["NUM_DISPLAY_DROPDOWN"],
+                               "All")
     select_season(driver, year)
     time.sleep(2)
     table_rows = driver.find_elements(By.CSS_SELECTOR, conf["ROWS"])
@@ -261,13 +266,12 @@ def get_tournaments_info(driver, year='2023'):
     Returns list of the rows of the data.
     """
     try:
-        select_num_display_results(driver, header=conf["TOURNAMENTS_TABLE_HEADER"],
-                                   tail_button=conf["NUM_DISPLAY_BUTTON"], tail_dropdown=conf["NUM_DISPLAY_DROPDOWN"],
-                                   num="All")
+        select_num_display_results(driver, conf["TOURNAMENTS_TABLE_HEADER"],
+                                   conf["NUM_DISPLAY_BUTTON"], conf["NUM_DISPLAY_DROPDOWN"],"All")
         select_season(driver, year)
         checkbox_list_str = conf["CHECK_BOX_LIST_TOURNAMENTS"]
-        select_checkboxes(driver, header=conf["TOURNAMENTS_TABLE_HEADER"], tail_button=conf["CHECKBOX_BUTTON"],
-                          tail_dropdown=conf["CHECKBOX_DROPDOWN"], checkbox_list=checkbox_list_str)
+        select_checkboxes(driver, conf["TOURNAMENTS_TABLE_HEADER"], conf["CHECKBOX_BUTTON"],
+                          conf["CHECKBOX_DROPDOWN"], checkbox_list_str)
 
         # Extracts table
         time.sleep(2)

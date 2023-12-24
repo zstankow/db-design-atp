@@ -1,8 +1,7 @@
 import argparse
 import json
 from tennis_logger import logger
-from data_collector import add_players_info, add_tournament_info, add_events_info
-from insta_api import add_posts_info
+from data_collector import add_players_info, add_tournament_info, add_events_info, add_insta_info
 import webscraper
 import pymysql
 
@@ -18,8 +17,8 @@ def execute_sql_file():
     """
     connection = pymysql.connect(
         host="localhost",
-        user=conf["USER"],
-        password=conf["PASSWORD"]
+        user=conf["MYSQL_USER"],
+        password=conf["MYSQL_PASSWORD"]
     )
     with connection.cursor() as cursor:
         try:
@@ -61,6 +60,9 @@ def parse():
     subparsers.add_parser('empty_db', help='Creates a mysql database "tennis" with empty tables')
     # Subparser for 'create_db' command
     subparsers.add_parser('create_db', help='Creates a mysql database "tennis" with filled tables')
+    # Subparser for 'fill_insta' command
+    subparsers.add_parser('fill_insta', help="Connect to Instagram API and add information from "
+                                             "players' instagram accounts.")
     args = parser.parse_args()
     return args
 
@@ -68,30 +70,42 @@ def parse():
 def main():
     args = parse()
     logger.info(f'Args input: {args}')
+
     # Execute the command based on the provided arguments
     if args.command == 'tournaments':
         print(f"Executing 'tournaments' command for the year {args.year}")
         print("Loading...")
         table = webscraper.scrape_tournaments(args.year)
         webscraper.print_data(table)
+
     elif args.command == 'ranking':
         print(f"Executing 'ranking' command for the year {args.year} with {args.number_of_players} players")
         print("Loading...")
         table = webscraper.scrape_rankings(args.number_of_players, args.year)
         webscraper.print_data(table)
+
     elif args.command == 'empty_db':
         print(f"Creating empty database 'tennis'")
         execute_sql_file()
         print(f"Database 'tennis' created.")
+
     elif args.command == 'create_db':
-        print(f"Creating database 'tennis'")
+        print("Creating database 'tennis'")
         execute_sql_file()
-        print(f"Database 'tennis' created.")
-        print(f"Collecting data... This will take a several minutes...")
+        print("Database 'tennis' created.")
+        print("Collecting data on players, tournaments, and events... This will take a few minutes...")
         add_players_info()
+        print("Players added.")
         add_tournament_info()
+        print("Tournaments added.")
         add_events_info()
-        add_posts_info()
+        print("Events added.")
+
+    elif args.command == 'fill_insta':
+        print("Collecting data on player's instagram accounts and posts...")
+        add_insta_info()
+        print("Instagram data added.")
+
     else:
         print("Invalid command. Supported commands: tournaments, ranking, empty_db, create_db.")
 

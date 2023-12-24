@@ -1,7 +1,10 @@
 import webscraper
 import pymysql
 import json
+import pandas as pd
+from instagrapi import Client
 from tennis_logger import logger
+
 
 with open('config.json', 'r') as file:
     conf = json.load(file)
@@ -14,21 +17,137 @@ def connect_to_mysql():
     """
     connection = pymysql.connect(
         host="localhost",
-        user=conf["USER"],
-        password=conf["PASSWORD"],
+        user=conf["MYSQL_USER"],
+        password=conf["MYSQL_PASSWORD"],
         database=conf["DATABASE"]
     )
     return connection
 
 
+def connect_to_instagram():
+    """
+    Connects to instagram with username and password.
+    Returns client.
+    """
+    print("Connecting to Instagram...")
+    client = Client()
+    client.login(conf["INSTA_USERNAME"], conf["INSTA_PASSWORD"])
+    print("Connected")
+    return client
+
+
+def get_account_id(cursor, username):
+    """
+    Returns the account_id associated with the username.
+    """
+    account_id = None
+    select_query = "SELECT id FROM accounts WHERE username = %s"
+    cursor.execute(select_query, (username,))
+    result = cursor.fetchone()
+    if result:
+        account_id = result[conf["ACCOUNT_ID_INDEX"]]
+    return account_id
+
+
+def insert_usernames(connection):
+    """
+    Reads player's usernames from csv and inserts usernames into the accounts table of the database.
+    """
+    try:
+        data = pd.read_csv('players_usernames.csv')
+        with connection.cursor() as cursor:
+            delete_accounts_query = "DELETE FROM accounts"
+            delete_posts_query = "DELETE FROM posts"
+            cursor.execute(delete_posts_query)
+            cursor.execute(delete_accounts_query)
+            for index, row in data.iterrows():
+                player_name = row['Player Name']
+                username = row['Username']
+
+                # Get player_id from the players table based on player_name
+                query_player_id = "SELECT id FROM players WHERE name = %s"
+                cursor.execute(query_player_id, (player_name,))
+                player_id = cursor.fetchone()  # Fetch the row
+                if player_id:  # Ensure a result was obtained
+                    player_id = player_id[conf["PLAYER_ID_INDEX"]]  # Access the first column value in the tuple
+                    # Insert username and player_id into the accounts table
+                    insert_query = "INSERT INTO accounts (username, player_id) VALUES (%s, %s)"
+                    cursor.execute(insert_query, (username, player_id))
+                    connection.commit()
+        print("Usernames inserted successfully!")
+    except pymysql.Error as error:
+        print("Error inserting usernames:", error)
+
+
+def insert_posts_info(client, cursor, username):
+    """
+    Inserts instagram posts into posts table of the database.
+    """
+    user_id = client.user_id_from_username(username)
+    last_10_posts = client.user_medias(user_id, conf["N_POSTS"])
+    account_id = get_account_id(cursor, username)
+    for post in last_10_posts:
+        like_count = post.like_count
+        comment_count = post.comment_count
+        caption_text = post.caption_text[:conf["CAPTION_LIMIT"]]
+        url = conf["INSTA_URL"] + post.code
+        insert_query = """
+            INSERT INTO posts (account_id, username, text, likes, comments, url)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """
+        insert_values = (account_id, username, caption_text, like_count, comment_count, url)
+        cursor.execute(insert_query, insert_values)
+
+
+def insert_account_info(client, cursor, username):
+    """
+    Inserts instagram account information into database.
+    """
+    user = client.user_info_by_username(username)
+    follower_count = user.follower_count
+    following_count = user.following_count
+    posts_count = user.media_count
+    update_query = """
+                UPDATE accounts
+                SET followers = %s, following = %s, total_posts = %s
+                WHERE username = %s
+                """
+    update_values = (follower_count, following_count, posts_count, username)
+    cursor.execute(update_query, update_values)
+
+
+def add_insta_info():
+    """
+    Retrieves info on Instagram accounts and posts and inserts data into database.
+    """
+    connection = connect_to_mysql()
+    client = connect_to_instagram()
+    insert_usernames(connection)
+    try:
+        with connection.cursor() as cursor:
+            # Fetch all usernames from the accounts table
+            select_query = "SELECT username FROM accounts"
+            cursor.execute(select_query)
+            usernames = cursor.fetchall()
+            for username in usernames:
+                username = username[conf["USERNAME_INDEX"]]
+                insert_account_info(client, cursor, username)
+                logger.info(f"Instagram account '{username}' added to database.")
+                insert_posts_info(client, cursor, username)
+                connection.commit()
+                logger.info(f"Instagram posts of '{username}' added to database")
+            connection.commit()
+    except Exception as e:
+        logger.error(f"{e}: Instagram information of '{username}' failed to be added to database")
+
+
 def add_events_info():
     """
-    Retrieves info on tournament events from between years 2014 and 2023.
+    Retrieves info on tournament events from between years 2014 and 2023 and inserts data into database.
     """
     events_info = webscraper.scrape_events()
     insert_events(events_info)
     logger.info(f"Event information of added to database.")
-    print(f"Event information of added to database.")
 
 
 def get_player_id(player_name, connection):
@@ -42,15 +161,15 @@ def get_player_id(player_name, connection):
         return player_id
 
 
-def get_tournament_id(tournament_name, connection):
+def get_tournament_id(tournament_name, date, connection):
     """
     Returns tournament_id of tournament.
     """
     with connection.cursor() as cursor:
-        query_player = "SELECT tournament_id FROM tournaments WHERE name = %s"
-        cursor.execute(query_player, tournament_name)
+        query_player = "SELECT tournament_id FROM tournaments WHERE name = %s AND year = %s"
+        cursor.execute(query_player, tournament_name, date.year)
         tournament_id = cursor.fetchone()
-        return tournament_id
+        return tournament_id[0]
 
 
 def insert_events(events_info):
@@ -63,7 +182,7 @@ def insert_events(events_info):
             # Check if the name already exists in the players table
             winner_id = get_player_id(event_data["Winner"], connection)
             finalist_id = get_player_id(event_data["Finalist"], connection)
-            tournament_id = get_tournament_id(event_data["Name"], connection)
+            tournament_id = get_tournament_id(event_data["Name"], event_data["Date"], connection)
 
             # Insert data into the events table
             query_insert = ("INSERT INTO events (date, name, tournament_id, winner_id, finalist_id, game_result) "
@@ -91,7 +210,7 @@ def add_players_info():
 
 def insert_countries(player_data, connection):
     """
-    Inserts country name into countries table.
+    Inserts country name into countries table in the database.
     """
     with connection.cursor() as cursor:
         query_country = "SELECT country_id FROM countries WHERE name = %s"

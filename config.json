@@ -34,5 +34,13 @@
   "END": 2013,
   "MYSQL_USER": "root",
   "MYSQL_PASSWORD": "Bagdad90",
-  "DATABASE": "tennis"
+  "DATABASE": "tennis",
+  "USERNAME_INDEX": 0,
+  "ACCOUNT_ID_INDEX": 0,
+  "PLAYER_ID_INDEX":0,
+  "INSTA_USERNAME": "zoe_nathan20231",
+  "INSTA_PASSWORD": "Nathszpil97",
+  "INSTA_URL": "https://www.instagram.com/p/",
+  "N_POSTS": 10,
+  "CAPTION_LIMIT": 20
 }

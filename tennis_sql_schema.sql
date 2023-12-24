@@ -47,7 +47,7 @@ CREATE TABLE events (
 CREATE TABLE posts (
     post_id INTEGER AUTO_INCREMENT PRIMARY KEY,
     account_id INTEGER,
-    test VARCHAR(255),
+    text VARCHAR(255),
     likes INTEGER,
     comments INTEGER,
     url VARCHAR(255)
