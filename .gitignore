@@ -2,6 +2,7 @@ itennis.log
 tennis.log
 chromedriver.exe
 tournaments_copy.py
+duplicates_delete.py
 __pycache__/
 *.pyc
 *.pyo
