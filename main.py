@@ -104,10 +104,10 @@ def main():
     elif args.command == 'fill_insta':
         print("Filling instagram infos about posts and accounts...")
         add_insta_info()
-        print("All data from Instagram")
+        print("All data from Instagram imported !")
 
     else:
-        print("Invalid command. Supported commands: tournaments, ranking, empty_db, create_db.")
+        print("Invalid command. Supported commands: tournaments, ranking, empty_db, create_db, fill_insta")
 
 
 if __name__ == "__main__":
