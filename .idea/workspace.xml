@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13f9551b-90e7-47aa-b74e-2c83c90e509c" name="Changes" comment="delete useless line">
-      <change beforePath="$PROJECT_DIR$/fill_players_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/fill_players_table.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fill_tournaments_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/fill_tournaments_table.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_collector.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/insert_finals.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/insta_api.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/players_usernames.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tennis_logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tennis_sql_schema.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webscraper.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +138,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="create_db" />
+      <option name="PARAMETERS" value="fill_insta" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
