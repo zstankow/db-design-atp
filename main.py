@@ -62,7 +62,8 @@ def parse():
     subparsers.add_parser('create_db', help='Creates a mysql database "tennis" with filled tables')
     # Subparser for 'fill_insta' command
     subparsers.add_parser('fill_insta', help="Connect to Instagram API and add information from "
-                                             "players' instagram accounts.")
+                                             "players' instagram accounts. User must run 'create_db' command "
+                                             "before 'fill_insta'.")
     args = parser.parse_args()
     return args
 
@@ -95,11 +96,11 @@ def main():
         print("Database 'tennis' created.")
         print("Collecting data on players, tournaments, and events... This will take a few minutes...")
         add_players_info()
-        print("Players added.")
+        print("All players added.")
         add_tournament_info()
-        print("Tournaments added.")
+        print("All tournaments added.")
         add_events_info()
-        print("Events added.")
+        print("All events added.")
 
     elif args.command == 'fill_insta':
         print("Collecting data on player's instagram accounts and posts...")

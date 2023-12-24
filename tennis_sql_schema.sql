@@ -57,6 +57,10 @@ CREATE TABLE posts (
 -- Create accounts table
 CREATE TABLE accounts (
     account_id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    player_id INTEGER
+    username VARCHAR(255),
+    player_id INTEGER,
+    followers INTEGER,
+    following INTEGER,
+    total_posts INTEGER
     -- FOREIGN KEY (player_id) REFERENCE players(player_id)
+);

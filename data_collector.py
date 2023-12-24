@@ -41,7 +41,7 @@ def get_account_id(cursor, username):
     Returns the account_id associated with the username.
     """
     account_id = None
-    select_query = "SELECT id FROM accounts WHERE username = %s"
+    select_query = "SELECT account_id FROM accounts WHERE username = %s"
     cursor.execute(select_query, (username,))
     result = cursor.fetchone()
     if result:
@@ -65,7 +65,7 @@ def insert_usernames(connection):
                 username = row['Username']
 
                 # Get player_id from the players table based on player_name
-                query_player_id = "SELECT id FROM players WHERE name = %s"
+                query_player_id = "SELECT player_id FROM players WHERE name = %s"
                 cursor.execute(query_player_id, (player_name,))
                 player_id = cursor.fetchone()  # Fetch the row
                 if player_id:  # Ensure a result was obtained
@@ -75,45 +75,55 @@ def insert_usernames(connection):
                     cursor.execute(insert_query, (username, player_id))
                     connection.commit()
         print("Usernames inserted successfully!")
-    except pymysql.Error as error:
-        print("Error inserting usernames:", error)
+        logger.info("Usernames inserted into database successfully.")
+    except Exception as e:
+        print(f"{e}: Error inserting usernames.")
+        logger.error("Error inserting usernames in insert_usernames")
 
 
 def insert_posts_info(client, cursor, username):
     """
     Inserts instagram posts into posts table of the database.
     """
-    user_id = client.user_id_from_username(username)
-    last_10_posts = client.user_medias(user_id, conf["N_POSTS"])
-    account_id = get_account_id(cursor, username)
-    for post in last_10_posts:
-        like_count = post.like_count
-        comment_count = post.comment_count
-        caption_text = post.caption_text[:conf["CAPTION_LIMIT"]]
-        url = conf["INSTA_URL"] + post.code
-        insert_query = """
-            INSERT INTO posts (account_id, username, text, likes, comments, url)
-            VALUES (%s, %s, %s, %s, %s, %s)
-            """
-        insert_values = (account_id, username, caption_text, like_count, comment_count, url)
-        cursor.execute(insert_query, insert_values)
+    try:
+        user_id = client.user_id_from_username(username)
+        last_10_posts = client.user_medias(user_id, conf["N_POSTS"])
+        account_id = get_account_id(cursor, username)
+        for post in last_10_posts:
+            like_count = post.like_count
+            comment_count = post.comment_count
+            caption_text = post.caption_text[:conf["CAPTION_LIMIT"]]
+            url = conf["INSTA_URL"] + post.code
+            insert_query = """
+                INSERT INTO posts (account_id, text, likes, comments, url)
+                VALUES (%s, %s, %s, %s, %s)
+                """
+            insert_values = (account_id, caption_text, like_count, comment_count, url)
+            cursor.execute(insert_query, insert_values)
+            logger.info(f"10 posts from account_id {account_id} added to accounts table in database.")
+    except Exception as e:
+        logger.error(f"{e}: Unable to added posts to accounts table in database.")
 
 
 def insert_account_info(client, cursor, username):
     """
     Inserts instagram account information into database.
     """
-    user = client.user_info_by_username(username)
-    follower_count = user.follower_count
-    following_count = user.following_count
-    posts_count = user.media_count
-    update_query = """
-                UPDATE accounts
-                SET followers = %s, following = %s, total_posts = %s
-                WHERE username = %s
-                """
-    update_values = (follower_count, following_count, posts_count, username)
-    cursor.execute(update_query, update_values)
+    try:
+        user = client.user_info_by_username(username)
+        follower_count = user.follower_count
+        following_count = user.following_count
+        posts_count = user.media_count
+        update_query = """
+                    UPDATE accounts
+                    SET followers = %s, following = %s, total_posts = %s
+                    WHERE username = %s
+                    """
+        update_values = (follower_count, following_count, posts_count, username)
+        cursor.execute(update_query, update_values)
+        logger.info(f"Added {username} information to accounts table in database.")
+    except Exception as e:
+        logger.error(f"{e}: Unable to add account information of {username} to accounts table in database.")
 
 
 def add_insta_info():
@@ -136,7 +146,6 @@ def add_insta_info():
                 insert_posts_info(client, cursor, username)
                 connection.commit()
                 logger.info(f"Instagram posts of '{username}' added to database")
-            connection.commit()
     except Exception as e:
         logger.error(f"{e}: Instagram information of '{username}' failed to be added to database")
 
