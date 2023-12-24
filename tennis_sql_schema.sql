@@ -1,0 +1,61 @@
+DROP DATABASE IF EXISTS tennis;
+CREATE DATABASE tennis;
+USE tennis;
+
+-- Create players table
+CREATE TABLE players (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    best_rank INTEGER,
+    country_id INTEGER
+);
+
+
+-- Create countries table
+CREATE TABLE countries (
+    country_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+-- Create tournaments table
+CREATE TABLE tournaments (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    year INTEGER,
+    name VARCHAR(255),
+    level VARCHAR(255),
+    surface VARCHAR(255),
+    participation_perc FLOAT,
+    strength INTEGER,
+    avg_elo INTEGER
+);
+
+-- Create finals table
+CREATE TABLE finals (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    date VARCHAR(255),
+    tournament_id INTEGER,
+    winner VARCHAR(255),
+    loser VARCHAR(255),
+    game_result VARCHAR(255)
+);
+
+-- Create accounts table
+CREATE TABLE accounts (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    player_id INTEGER,
+    username VARCHAR(255),
+    followers INTEGER,
+    following INTEGER,
+    total_posts INTEGER
+);
+
+-- Create posts table
+CREATE TABLE posts (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    account_id INTEGER,
+    username VARCHAR(255),
+    text VARCHAR(255),
+    likes INTEGER,
+    comments INTEGER,
+    url VARCHAR(255)
+);
