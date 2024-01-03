@@ -32,6 +32,7 @@
   "NUM": "200",
   "START": 2023,
   "END": 2014,
+  "HOST": "data-mining-db1.cttpnp4olbpx.us-west-1.rds.amazonaws.com",
   "MYSQL_USER": "zoe_nathan",
   "MYSQL_PASSWORD": "zoe_nathan",
   "DATABASE": "zoe_nathan",

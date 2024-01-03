@@ -16,7 +16,7 @@ def execute_sql_file():
     Returns None
     """
     connection = pymysql.connect(
-        host="localhost",
+        host=conf['HOST'],
         user=conf["MYSQL_USER"],
         password=conf["MYSQL_PASSWORD"]
     )
