@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS tennis;
-CREATE DATABASE tennis;
-USE tennis;
+DROP DATABASE IF EXISTS zoe_nathan;
+CREATE DATABASE zoe_nathan;
+USE zoe_nathan;
 
 -- Create players table
 CREATE TABLE players (

@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 from tabulate import tabulate
 import json
 import pandas as pd
@@ -319,7 +320,15 @@ def call_driver(url):
     Calls the Chrome webdriver.
     Returns the driver.
     """
-    driver = webdriver.Chrome()
+
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # Ensures the browser runs in headless mode
+    chrome_options.add_argument("window-size=1920,1080")
+    chrome_options.add_argument("--no-sandbox")  # Bypass OS security model, REQUIRED on Linux
+    chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+    driver = webdriver.Chrome(executable_path='chromedriver.exe', options=chrome_options)
+
+    #driver = webdriver.Chrome()
     try:
         driver.get(url)
         logger.info(f"Successfully fetched URL: {url}")
