@@ -2,7 +2,8 @@ Authors: Zoe Stankowski & Nathan Szpilman
 
 ## __Ultimate ATP Tennis Statistics__
 This Python script retrieves ATP tennis stats from the 
-[Ultimate Tennis Statistics website](https://www.ultimatetennisstatistics.com/): the ultimate men's tennis statistics destination for the die-hard tennis fans!
+[Ultimate Tennis Statistics website] (https://www.ultimatetennisstatistics.com/): the ultimate men's tennis statistics destination for 
+the die-hard tennis fans!
 Be it latest or historical results, in-match statistics, records or all-time greats comparisons, Elo ratings or tournament forecasts, you will find it there.
 
 ## The data scraped:
