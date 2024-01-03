@@ -326,7 +326,7 @@ def call_driver(url):
     chrome_options.add_argument("window-size=1920,1080")
     chrome_options.add_argument("--no-sandbox")  # Bypass OS security model, REQUIRED on Linux
     chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
-    driver = webdriver.Chrome(executable_path='chromedriver.exe', options=chrome_options)
+    driver = webdriver.Chrome(executable_path='chromedriver', options=chrome_options)
 
     #driver = webdriver.Chrome()
     try:
