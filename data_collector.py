@@ -146,7 +146,7 @@ def add_insta_info():
                 insert_posts_info(client, cursor, username)
                 connection.commit()
                 logger.info(f"Instagram posts of '{username}' added to database")
-                print("Instagram account '{username}' added to database.")
+                print(f"Instagram account '{username}' added to database.")
     except Exception as e:
         logger.error(f"{e}: Instagram information of '{username}' failed to be added to database")
 
