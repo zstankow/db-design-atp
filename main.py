@@ -59,11 +59,13 @@ def parse():
     # Subparser for 'empty_db' command
     subparsers.add_parser('empty_db', help='Creates a mysql database "tennis" with empty tables')
     # Subparser for 'create_db' command
-    subparsers.add_parser('create_db', help='Creates a mysql database "tennis" with filled tables')
+    subparsers.add_parser('create_db', help='Creates a mysql database "tennis" with filled players '
+                                            'and tournaments tables')
     # Subparser for 'fill_insta' command
     subparsers.add_parser('fill_insta', help="Connect to Instagram API and add information from "
                                              "players' instagram accounts. User must run 'create_db' command "
                                              "before 'fill_insta'.")
+    subparsers.add_parser('add_events', help='Fills events table of database.')
     args = parser.parse_args()
     return args
 
@@ -99,6 +101,9 @@ def main():
         print("All players added.")
         add_tournament_info()
         print("All tournaments added.")
+
+    elif args.command == 'add_events':
+        print("Collecting data on events... ")
         add_events_info()
         print("All events added.")
 
