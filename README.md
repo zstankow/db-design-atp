@@ -4,7 +4,18 @@ Authors: Zoe Stankowski & Nathan Szpilman
 This Python script retrieves ATP tennis stats from the 
 [Ultimate Tennis Statistics website] (https://www.ultimatetennisstatistics.com/): the ultimate men's tennis statistics destination for 
 the die-hard tennis fans!
-Be it latest or historical results, in-match statistics, records or all-time greats comparisons, Elo ratings or tournament forecasts, you will find it there.
+Be it latest or historical results, in-match statistics, records or all-time greats comparisons, Elo ratings or tournament forecasts, you will find it there. As part of this project we present some interesting findings from the data.
+
+For example:
+
+![image](https://github.com/zstankow/db-design-atp/assets/150588332/1dd1429c-c5c5-4228-b739-f285a7b21f40)
+
+![image](https://github.com/zstankow/db-design-atp/assets/150588332/69cb1eba-cf12-43f5-bc30-793887d026cc)
+
+![image](https://github.com/zstankow/db-design-atp/assets/150588332/118c355a-a311-4c32-a4be-c40590bb95ca)
+
+
+
 
 ## The data scraped:
 - Tournaments
@@ -20,6 +31,7 @@ All the information is gathered to better understand the stats of the top player
 - To successfully scrape relevant data from the Ultimate Tennis Statistics website.
 - Create a large DB of information about tennis players and past events.
 - Collect instagram account usernames and posts from ranked players.
+- Create some interesting visualizations from the scraped data
 
 ## Methods and Used Libraries:
 
